@@ -48,7 +48,7 @@ const colors = {
   disabled: '#ebebeb',
   white: '#ffffff',
   purple: '#342461',
-  mint: '#027b94',
+  mint: '#02C3BD',
 };
 
 const borders = {
