@@ -1,3 +1,4 @@
+import { GiTreeBranch } from 'react-icons/gi';
 import styled, { css } from 'styled-components';
 import Login from '../../pages/Login/Login';
 
@@ -19,7 +20,7 @@ const SideDrawer = ({
         <DrawerHeader>
           <MyProfile onClick={goToMyPage}>
             <ProfileImg>
-              <img src="/images/bread.png" alt="profile" />
+              <GiTreeBranch />
             </ProfileImg>
             <ProfileText>
               you can code anything
@@ -34,14 +35,32 @@ const SideDrawer = ({
           <HeaderLoginBtn onClick={goToWrite}>글쓰기</HeaderLoginBtn>
         </DrawerHeader>
         <DrawerBody>
-          <button onClick={goToMain}>브런치 홈</button>
-          <button onClick={goToBook}>브런치 북</button>
+          <BtnElement>
+            <button onClick={goToMyPage}>내 브런치</button>
+            <hr />
+          </BtnElement>
+          <DivideLine />
+          <BtnElement>
+            <button onClick={goToMain}>브런치 홈</button>
+            <hr />
+          </BtnElement>
+          <BtnElement>
+            <button onClick={goToBook}>브런치 북</button>
+            <hr />
+          </BtnElement>
         </DrawerBody>
       </DrawerBar>
       <DrawerBackground drawerState={navDrawer} onClick={closeDrawer} />
     </>
   );
 };
+
+const DivideLine = styled.hr`
+  width: 60%;
+  margin-bottom: 2rem;
+  border-top: 1px solid #ddd;
+  opacity: 0.5;
+`;
 
 const MyProfile = styled.div`
   ${({ theme }) => theme.flex.flexBox('column')}
@@ -95,6 +114,7 @@ const DrawerBar = styled.div`
 const DrawerHeader = styled.div`
   ${({ theme }) => theme.flex.flexBox('column')}
   height: 25%;
+  min-height: 250px;
   border-bottom: 1px solid #ccc;
   background-color: #f8f8f8;
 
@@ -108,18 +128,15 @@ const DrawerHeader = styled.div`
 `;
 
 const ProfileImg = styled.div`
+  ${({ theme }) => theme.flex.flexBox('column')}
   width: 3rem;
   height: 3rem;
   border-radius: 50%;
   margin-bottom: 1rem;
+  color: white;
   background-color: black;
-  overflow: hidden;
-
-  img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-  }
+  font-size: 1.875rem;
+  padding: 0.313rem;
 `;
 
 const HeaderLoginBtn = styled.button`
@@ -131,22 +148,41 @@ const HeaderLoginBtn = styled.button`
   cursor: pointer;
 `;
 
+const BtnElement = styled.div`
+  ${({ theme }) => theme.flex.flexBox('column')}
+  margin-bottom: 1.5rem;
+
+  &:hover {
+    button {
+      color: #02c3bd;
+    }
+
+    hr {
+      border-bottom: 0.5px solid #02c3bd;
+    }
+  }
+
+  hr {
+    width: 60%;
+    position: absolute;
+    border: none;
+  }
+
+  button {
+    font-weight: 300;
+    border: 0;
+    padding: 0 0.8rem;
+    background-color: white;
+    text-align: center;
+    cursor: pointer;
+    z-index: 10;
+  }
+`;
+
 const DrawerBody = styled.div`
   ${({ theme }) => theme.flex.flexBox('column')}
   padding-top: 2.5rem;
   text-align: center;
-
-  button {
-    border: 0;
-    margin-bottom: 1.3rem;
-    background: transparent;
-    text-align: center;
-    cursor: pointer;
-
-    &:hover {
-      color: #02c3bd;
-    }
-  }
 `;
 
 export default SideDrawer;
