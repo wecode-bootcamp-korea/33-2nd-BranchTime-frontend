@@ -49,6 +49,8 @@ const colors = {
   white: '#ffffff',
   purple: '#342461',
   mint: '#02C3BD',
+  middleGray: '#999999',
+  bgGray: '#FBFBFB',
 };
 
 const borders = {
