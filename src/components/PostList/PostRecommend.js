@@ -1,21 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 const PostRecommend = () => {
+  const [recommned, setRecommend] = useState([]);
+  useEffect(() => {
+    fetch('/data/RECOMMEND_LIST.json')
+      .then(res => res.json())
+      .then(data => setRecommend(data));
+  }, []);
+
   return (
     <Aside>
       <RecommendTitle>추천 작가</RecommendTitle>
       <RecommendSearch>
-        {RECOMMEND_LIST.map(({ id, imgSrc, name, writeCount, subscribe }) => (
+        {recommned.map(({ id, imgSrc, name, writeCount, subscribe }) => (
           <RecommendItem key={id}>
             <RecommendImgBox>
               <img src={imgSrc} alt="임시 프로필" />
             </RecommendImgBox>
             <RecommendDetail>
               <RecommendText>{name}</RecommendText>
-              <span>글 {writeCount}</span>
+              <Span>글 {writeCount}</Span>
               <IcoDot />
-              <span>구독자 {subscribe}</span>
+              <Span>구독자 {subscribe}</Span>
             </RecommendDetail>
           </RecommendItem>
         ))}
@@ -25,51 +32,6 @@ const PostRecommend = () => {
 };
 
 export default PostRecommend;
-
-const RECOMMEND_LIST = [
-  {
-    id: 1,
-    imgSrc: '/images/bread.png',
-    name: '러블리 김작가',
-    writeCount: 94,
-    subscribe: 18,
-  },
-  {
-    id: 2,
-    imgSrc: '/images/bread.png',
-    name: '기린아빠',
-    writeCount: 100,
-    subscribe: 400,
-  },
-  {
-    id: 3,
-    imgSrc: '/images/bread.png',
-    name: 'Lemon',
-    writeCount: 158,
-    subscribe: 230,
-  },
-  {
-    id: 4,
-    imgSrc: '/images/bread.png',
-    name: 'WECODE',
-    writeCount: 554,
-    subscribe: 94,
-  },
-  {
-    id: 5,
-    imgSrc: '/images/bread.png',
-    name: 'WECODE',
-    writeCount: 554,
-    subscribe: 94,
-  },
-  {
-    id: 6,
-    imgSrc: '/images/bread.png',
-    name: 'WECODE',
-    writeCount: 554,
-    subscribe: 94,
-  },
-];
 
 const Aside = styled.aside`
   width: 13.75rem;
@@ -113,12 +75,12 @@ const RecommendImgBox = styled.div`
   }
 `;
 
-const RecommendDetail = styled.div`
-  span {
-    font-size: ${({ theme }) => theme.fontSizes.xs};
-    line-height: 1.125rem;
-    color: ${({ theme }) => theme.colors.middleGray};
-  }
+const RecommendDetail = styled.div``;
+
+const Span = styled.span`
+  font-size: ${({ theme }) => theme.fontSizes.xs};
+  line-height: 1.125rem;
+  color: ${({ theme }) => theme.colors.middleGray};
 `;
 
 const RecommendText = styled.p`
