@@ -3,11 +3,13 @@ import styled from 'styled-components';
 
 const PostListItem = () => {
   const [writeList, setWriteList] = useState([]);
+
   useEffect(() => {
     fetch('/data/WRITE_LIST.json')
       .then(response => response.json())
       .then(data => setWriteList(data));
   }, []);
+
   return (
     <>
       {writeList.map(
@@ -99,7 +101,7 @@ const DescWarp = styled.div`
 const SubDesc = styled.div`
   overflow: hidden;
   display: block;
-  padding-top: 20px;
+  padding-top: ${({ theme }) => theme.paddings.xl};
   font-size: ${({ theme }) => theme.fontSizes.xs};
   color: ${({ theme }) => theme.colors.darkGray};
 `;

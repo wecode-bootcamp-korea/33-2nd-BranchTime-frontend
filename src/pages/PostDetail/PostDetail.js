@@ -1,5 +1,5 @@
 import React from 'react';
-import PostDetailHead from '../../components/PostDetail/PostDetailHead';
+import PostDetailHead from './components/PostDetailHead';
 
 const PostDetail = () => {
   return (
