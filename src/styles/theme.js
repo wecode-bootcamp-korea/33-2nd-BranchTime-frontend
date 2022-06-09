@@ -36,6 +36,7 @@ const margins = {
   xl: calcRem(20),
   xxl: calcRem(24),
   xxxl: calcRem(40),
+  xxxxl: calcRem(50),
 };
 
 const colors = {
