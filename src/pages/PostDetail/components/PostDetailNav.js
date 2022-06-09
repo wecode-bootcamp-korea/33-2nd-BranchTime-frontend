@@ -1,28 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { TbHeartHandshake } from 'react-icons/tb';
 import { BsChatDots } from 'react-icons/bs';
 import { BiShareAlt } from 'react-icons/bi';
+import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 
-const PostDetailNav = () => {
+const PostDetailNav = ({ data }) => {
+  const [heart, setHeart] = useState(false);
+
+  const onLikeUp = () => {
+    setHeart(!heart);
+  };
   return (
     <div>
-      <CoverNav>
-        <div>NavComponent</div>
-        <Button>subCate</Button>
-        <Ul>
-          <Li>
-            <TbHeartHandshake size={25} />
-            <LickCount>4</LickCount>
-          </Li>
-          <Li>
-            <BsChatDots size={20} />
-          </Li>
-          <Li>
-            <BiShareAlt size={20} />
-          </Li>
-        </Ul>
-      </CoverNav>
+      {data.map(({ id, post_subcategory_name, post_like_count }) => (
+        <CoverNav key={id}>
+          <div>NavComponent</div>
+          <Button>{post_subcategory_name}</Button>
+          <Ul>
+            <Li>
+              {heart ? (
+                <AiFillHeart onClick={onLikeUp} size={25} />
+              ) : (
+                <AiOutlineHeart onClick={onLikeUp} size={25} />
+              )}
+
+              <LickCount>
+                {heart === true ? post_like_count + 1 : post_like_count}
+              </LickCount>
+            </Li>
+            <Li>
+              <BsChatDots size={20} />
+            </Li>
+            <Li>
+              <BiShareAlt size={20} />
+            </Li>
+          </Ul>
+        </CoverNav>
+      ))}
     </div>
   );
 };

@@ -1,44 +1,44 @@
 [
   {
     "id": 1,
-    "imgSrc": "/images/bread.png",
-    "title": "취향은 어떻게 계급이 되는가?",
+    "imgSrc": "/images/PostDetail/detail_recommend_img1.jpg",
+    "title": "코딩이 어떻게 취향이 되는가?",
     "desc": "이직을 준비하는 주니어 디자이너들을 위해 집필만 5일 걸린 조언 한 움큼이직을 준비하는 주니어 디자이너들을 위해 집필만 5일 걸린 조언 한 움큼이직을 준비하는 주니어 디자이너들을 위해 집필만 5일 걸린 조언 한 움큼이직을 준비하는 주니어 디자이너들을 위해 집필만 5일 걸린 조언 한 움큼",
-    "userName": "글쓴이"
+    "userName": "한구"
   },
   {
     "id": 2,
-    "imgSrc": "/images/bread.png",
-    "title": "2인스타일기들",
+    "imgSrc": "/images/PostDetail/detail_recommend_img2.jpg",
+    "title": "인스타일기들",
     "desc": "이직을 준비하는 주니어 디자이너들을 위해 집필만 5일 걸린 조언 한 움큼이직을 준비하는 주니어 디자이너들을 위해 집필만 5일 걸린 조언 한 움큼이직을 준비하는 주니어 디자이너들을 위해 집필만 5일 걸린 조언 한 움큼이직을 준비하는 주니어 디자이너들을 위해 집필만 5일 걸린 조언 한 움큼",
-    "userName": "글쓴이"
+    "userName": "민정"
   },
   {
     "id": 3,
-    "imgSrc": "/images/bread.png",
-    "title": "3인스타일기들",
-    "desc": "이직을 준비하는 주니어 디자이너들을 위해 집필만 5일 걸린 조언 한 움큼이직을 준비하는 주니어 디자이너들을 위해 집필만 5일 걸린 조언 한 움큼이직을 준비하는 주니어 디자이너들을 위해 집필만 5일 걸린 조언 한 움큼이직을 준비하는 주니어 디자이너들을 위해 집필만 5일 걸린 조언 한 움큼",
-    "userName": "글쓴이"
+    "imgSrc": "/images/PostDetail/detail_recommend_img3.jpg",
+    "title": "Git & Github 설치 및 잔디 심기",
+    "desc": ". 은 모든 파일을 뜻한다. add 뒤에 파일 이름을 붙여주면 그 파일만 선택적으로 올릴 수 있다. 예를 들어 git add index.html 를 해주면 index.html 만 업데이트 된다.",
+    "userName": "윤지"
   },
   {
     "id": 4,
-    "imgSrc": "/images/bread.png",
-    "title": "4인스타일기들",
-    "desc": "이직을 준비하는 주니어 디자이너들을 위해 집필만 5일 걸린 조언 한 움큼이직을 준비하는 주니어 디자이너들을 위해 집필만 5일 걸린 조언 한 움큼이직을 준비하는 주니어 디자이너들을 위해 집필만 5일 걸린 조언 한 움큼이직을 준비하는 주니어 디자이너들을 위해 집필만 5일 걸린 조언 한 움큼",
-    "userName": "글쓴이"
+    "imgSrc": "/images/PostDetail/detail_recommend_img4.jpg",
+    "title": "[API] RESTful API ",
+    "desc": "기계와 기계 소프트웨어와 소프트웨어 사이에서도 수많은 요청과 정보 교환이 이루어지고 있다. 이들 사이에서 소통할 창구가 필요하다. 예를들어 기상정보가 관리되는 기상청 서버가 있다. 날씨 정보를 제공하는 다양한 웹 사이트나 앱들이 이 기상청 서버로부터 실시간으로 날씨 정보를 요청해서 받는다. 그렇다면 이 기상청 서버에게 정보를 요청하는 지정된 형식이 있어야 한다.",
+    "userName": "Remon"
   },
   {
     "id": 5,
-    "imgSrc": "/images/bread.png",
-    "title": "5인스타일기들",
-    "desc": "이직을 준비하는 주니어 디자이너들을 위해 집필만 5일 걸린 조언 한 움큼이직을 준비하는 주니어 디자이너들을 위해 집필만 5일 걸린 조언 한 움큼이직을 준비하는 주니어 디자이너들을 위해 집필만 5일 걸린 조언 한 움큼이직을 준비하는 주니어 디자이너들을 위해 집필만 5일 걸린 조언 한 움큼",
-    "userName": "글쓴이"
+    "imgSrc": "/images/PostDetail/detail_recommend_img5.jpg",
+    "title": "[Git] Rebase Commit Error",
+    "desc": "git rebase -i master를 하면 에디터가 열린다. 가장 최근 commit pick을 제외하고 나머지 commit을 합치기 위해 s로 바꾸는 과정에서 shift를 눌렀다. 여기서 잠깐! 윈도우 터미널은 단축키가 조금 다른데, 복사 붙여넣기 ctrl+c ctrl+v도 안된다.",
+    "userName": "행갬"
   },
   {
     "id": 6,
-    "imgSrc": "/images/bread.png",
-    "title": "6인스타일기들",
+    "imgSrc": "/images/PostDetail/detail_recommend_img6.gif",
+    "title": "즐거운 코딩 시간",
     "desc": "이직을 준비하는 주니어 디자이너들을 위해 집필만 5일 걸린 조언 한 움큼이직을 준비하는 주니어 디자이너들을 위해 집필만 5일 걸린 조언 한 움큼이직을 준비하는 주니어 디자이너들을 위해 집필만 5일 걸린 조언 한 움큼이직을 준비하는 주니어 디자이너들을 위해 집필만 5일 걸린 조언 한 움큼",
-    "userName": "글쓴이"
+    "userName": "슬기"
   }
 ]

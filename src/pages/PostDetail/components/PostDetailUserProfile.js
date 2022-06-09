@@ -1,23 +1,33 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const PostDetailUserProfile = () => {
+const PostDetailUserProfile = ({ data }) => {
   return (
     <UserProfileWarpper>
-      <Container>
-        <Title>UX 컨설턴트 전민수</Title>
-        <Desc>전민수 UX TV 시리즈</Desc>
-        <UserIntroduce>안녕하세요. 전민수 UX 컨설턴트입니다.</UserIntroduce>
+      {data.map(
+        ({
+          id,
+          post_user_name,
+          post_subtitle,
+          user_introduction,
+          user_subscription_count,
+        }) => (
+          <Container key={id}>
+            <Title>{post_user_name}</Title>
+            <Desc>{post_subtitle}</Desc>
+            <UserIntroduce>{user_introduction}</UserIntroduce>
 
-        <UserProfile>
-          <Img src="/images/bread.png" ale="임시프로필" />
-        </UserProfile>
+            <UserProfile>
+              <Img src="/images/bread.png" alt="임시프로필" />
+            </UserProfile>
 
-        <SubscribeWrap>
-          <Subscribe>구독자 33</Subscribe>
-          <Button>제안하기</Button>
-        </SubscribeWrap>
-      </Container>
+            <SubscribeWrap>
+              <Subscribe>구독자 {user_subscription_count}</Subscribe>
+              <Button>제안하기</Button>
+            </SubscribeWrap>
+          </Container>
+        )
+      )}
     </UserProfileWarpper>
   );
 };
@@ -31,8 +41,7 @@ const UserProfileWarpper = styled.section`
 const Container = styled.div`
   position: relative;
   width: 43.75rem;
-  /* TODO : 레이아웃 확인용 -> margin 0으로 바꿀 것 */
-  margin: 25px auto;
+  margin: 50px auto;
   padding: 2rem 0 5rem 0;
 `;
 

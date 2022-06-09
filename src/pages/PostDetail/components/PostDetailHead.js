@@ -1,38 +1,54 @@
 import React from 'react';
 import styled from 'styled-components';
+import Nav from '../../../components/Nav/Nav';
 import PostDetailNav from './PostDetailNav';
 
-const PostDetailHead = () => {
+const PostDetailHead = ({ data }) => {
   return (
-    <>
-      <PostDetailNav />
+    <PostDetailHeadWarpper>
+      {/* TODO : 머지 후 Nav 합칠 예정 */}
+      <Nav />
+      <PostDetailNav data={data} />
 
-      <Cover>
-        <CoverImg>
-          <Titlewarp>
-            <CoverTitleWarp>
-              <CoverTitle>
-                UX 디자인 프로세스에서 러프스케치의 역할은?
-              </CoverTitle>
-              <CoverSubTitle>전민수 UX TV 시리즈</CoverSubTitle>
-              <CoverDesc>
-                <span>by UX 컨설턴트 전민수</span>
-                <IcoDot />
-                <span>1시간전</span>
-              </CoverDesc>
-            </CoverTitleWarp>
-
-            <CoverInner />
-          </Titlewarp>
-        </CoverImg>
-      </Cover>
-    </>
+      {data.map(
+        ({
+          id,
+          post_title,
+          post_subtitle,
+          post_user_name,
+          post_created_at,
+          post_thumbnail_image,
+        }) => (
+          <Cover key={id}>
+            <CoverImg image={post_thumbnail_image}>
+              <Titlewarp>
+                <CoverTitleWarp>
+                  <CoverPositionWrap>
+                    <CoverTitle>{post_title}</CoverTitle>
+                    <CoverSubTitle>{post_subtitle}</CoverSubTitle>
+                    <CoverDesc>
+                      <span>by {post_user_name}</span>
+                      <IcoDot />
+                      <span>{post_created_at}</span>
+                    </CoverDesc>
+                  </CoverPositionWrap>
+                </CoverTitleWarp>
+              </Titlewarp>
+              <CoverInner />
+            </CoverImg>
+          </Cover>
+        )
+      )}
+    </PostDetailHeadWarpper>
   );
 };
 
 export default PostDetailHead;
 
+const PostDetailHeadWarpper = styled.div``;
+
 const Cover = styled.section`
+  position: relative;
   width: 100%;
   height: 28.125rem;
   z-index: 0;
@@ -40,37 +56,39 @@ const Cover = styled.section`
 `;
 
 const CoverImg = styled.div`
-  position: relative;
   width: 100%;
   height: 100%;
   background-position: 50% 50%;
   background-attachment: fixed;
   background-size: cover;
-  background-image: url('https://t1.daumcdn.net/thumb/R1280x0/?fname=http://t1.daumcdn.net/brunch/service/user/aLhx/image/oNPa0U0k_jv748YheykI4ZweWKs.jpg');
+  background-image: url(${({ image }) => image});
 `;
 
 const CoverInner = styled.div`
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   opacity: 0.3;
   background-color: #000;
 `;
 
 const Titlewarp = styled.section`
   position: relative;
-  top: 0;
-  left: 0;
+  width: 43.75rem;
   height: 100%;
   margin: 0 auto;
   color: #fff;
   z-index: 100;
 `;
 
-const CoverTitleWarp = styled.div`
+const CoverTitleWarp = styled.div``;
+
+const CoverPositionWrap = styled.div`
   position: absolute;
-  left: 18%;
-  bottom: ${theme => theme.theme.margins.xxxxl};
-  z-index: 100;
+  bottom: 80px;
+  left: 0;
 `;
 
 const CoverTitle = styled.h1`

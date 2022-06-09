@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import { BsChatDots } from 'react-icons/bs';
 import PostDetailMentTextarea from './PostDetailMentTextarea';
 
-const PostDetailComment = () => {
+const PostDetailComment = ({ data }) => {
   const [isCommentOpen, setIsCommentOpen] = useState(false);
   const [file, setFile] = useState('');
   const [previewURL, setPreviewURL] = useState('');
@@ -111,11 +111,27 @@ const PostDetailComment = () => {
       {isCommentOpen && (
         <section>
           <Label>
-            댓글 <CommentSpan>{comment.length}</CommentSpan>
+            댓글 <CommentSpan>{data.length}</CommentSpan>
           </Label>
           <Hr />
 
-          {comment.map(({ id, userName, text, imgSrc }) => (
+          {data.map(({ id, comment_image, user_name, comment_content }) => (
+            <CommentList key={id}>
+              {comment_image && (
+                <PreviewImg>
+                  <img src={comment_image} alt="임시사진" />
+                </PreviewImg>
+              )}
+              <CommentWrap isImage={comment_image !== ''}>
+                <UserName>{user_name}</UserName>
+                <CommentValue>{comment_content}</CommentValue>
+              </CommentWrap>
+
+              <Delete onClick={() => onRemove(id)}>삭제</Delete>
+            </CommentList>
+          ))}
+
+          {/* {comment.map(({ id, userName, text, imgSrc }) => (
             <CommentList key={id}>
               {imgSrc && (
                 <PreviewImg>
@@ -129,7 +145,7 @@ const PostDetailComment = () => {
 
               <Delete onClick={() => onRemove(id)}>삭제</Delete>
             </CommentList>
-          ))}
+          ))} */}
 
           <PostDetailMentTextarea
             commentValue={commentValue}
