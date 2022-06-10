@@ -5,6 +5,7 @@ import { BiAlignMiddle, BiAlignLeft, BiImages } from 'react-icons/bi';
 import { AiOutlineArrowRight, AiOutlineArrowLeft } from 'react-icons/ai';
 import React, { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
+import WriteCategory from './WriteCategory';
 
 const Write = () => {
   const [value, setValue] = React.useState(
@@ -15,6 +16,9 @@ const Write = () => {
   const [onImgMode, setOnImgMode] = useState(false);
   const [headerColorMode, setHeaderColorMode] = useState(false);
   const [headerColor, setHeaderColor] = useState(0);
+
+  const [mainCategoryId, setMainCategoryId] = useState('');
+  const [subCategory, setSubCategory] = useState('');
 
   const handleAlign = () => {
     setTitleAlign(prev => !prev);
@@ -34,13 +38,7 @@ const Write = () => {
   };
 
   const calculateColor = Math.abs(headerColor % 5);
-  const COLOR_SET = {
-    0: '#173f5f',
-    1: '#20639b',
-    2: '#3caea3',
-    3: '#f6d55a',
-    4: '#ed553b',
-  };
+  const COLOR_SET = ['#173f5f', '#20639b', '#3caea3', '#f6d55a', '#ed553b'];
 
   const [file, setFile] = useState('');
   const [previewURL, setPreviewURL] = useState('');
@@ -70,6 +68,34 @@ const Write = () => {
 
   const removeImg = () => {
     setOnImgMode(false);
+    setFile('');
+  };
+
+  const [mainTitle, setMainTitle] = useState('');
+  const writeMainTitle = e => {
+    setMainTitle(e.target.value);
+  };
+  const [subTitle, setSubTitle] = useState('');
+  const writeSubTitle = e => {
+    setSubTitle(e.target.value);
+  };
+
+  const postWrite = () => {
+    const formData = new FormData();
+    formData.append('thumbnail_image', file);
+    formData.append('content', value);
+    formData.append('subcategory', subCategory);
+    formData.append('sub_title', subTitle);
+    formData.append('title', mainTitle);
+    formData.append('color_code', COLOR_SET[calculateColor]);
+
+    fetch('http://10.58.1.170:8001/contents/', {
+      method: 'POST',
+      headers: {
+        Authorization: localStorage.getItem('token'),
+      },
+      body: formData,
+    }).then(response => response.json());
   };
 
   return (
@@ -81,11 +107,24 @@ const Write = () => {
         onImgMode={onImgMode}
       >
         <HeaderWrapper>
+          <WriteCategory
+            mainCategoryId={mainCategoryId}
+            setMainCategoryId={setMainCategoryId}
+            setSubCategory={setSubCategory}
+          />
           <InputTitle changeAlign={titleAlign}>
-            <BigTitle placeholder="제목을 입력하세요" />
-            <SmallTitle placeholder="소제목을 입력하세요" />
+            <BigTitle
+              onChange={e => writeMainTitle(e)}
+              placeholder="제목을 입력하세요"
+            />
+            <SmallTitle
+              onChange={e => writeSubTitle(e)}
+              placeholder="소제목을 입력하세요"
+            />
           </InputTitle>
           <EditHeaderBtn>
+            {/* To Do : 백엔드 통신 테스트 버튼입니다. */}
+            <button onClick={postWrite}>Test</button>
             <form>
               <label>
                 <BiImages />

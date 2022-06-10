@@ -20,9 +20,8 @@ function Router() {
     <BrowserRouter>
       <Nav />
       <Routes>
-        <Route path="/" element={<Nav />} />
+        <Route path="/" element={<Main />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/main" element={<Main />} />
         <Route path="/post_list/:id" element={<PostList />} />
         <Route path="/post_detail" element={<PostDetail />} />
         <Route path="/write" element={<Write />} />
