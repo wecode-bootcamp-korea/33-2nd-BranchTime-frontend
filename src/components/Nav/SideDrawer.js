@@ -1,8 +1,16 @@
 import styled, { css } from 'styled-components';
+import Login from '../../pages/Login/Login';
 
-const SideDrawer = ({ navDrawer, closeDrawer }) => {
+const SideDrawer = ({
+  loginModal,
+  startLogin,
+  quitLogin,
+  navDrawer,
+  closeDrawer,
+}) => {
   return (
     <>
+      {loginModal && <Login quitLogin={quitLogin} />}
       <DrawerBar drawerState={navDrawer}>
         <DrawerHeader>
           <ProfileImg>
@@ -14,7 +22,9 @@ const SideDrawer = ({ navDrawer, closeDrawer }) => {
             what you imagine
             <div>- King God Kyeom -</div>
           </ProfileText>
-          <HeaderLoginBtn>브랜치타임 시작하기</HeaderLoginBtn>
+          <HeaderLoginBtn onClick={startLogin}>
+            브랜치타임 시작하기
+          </HeaderLoginBtn>
         </DrawerHeader>
         <DrawerBody>
           <button>브런치 홈</button>
@@ -61,7 +71,7 @@ const DrawerBar = styled.div`
   font-size: 14px;
   text-align: center;
   transition: 800ms;
-  z-index: 100;
+  z-index: 1100;
 
   ${props =>
     props.drawerState &&
