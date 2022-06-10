@@ -7,6 +7,9 @@ import PostDetail from './pages/PostDetail/PostDetail';
 import Write from './pages/write/Write';
 import Login from './pages/Login/Login';
 import Redirect from './pages/Login/Redirect';
+import MyPage from './pages/MyPage/MyPage';
+import MyPageProfileEdit from './pages/MyPage/MyPageProfileEdit';
+import BookAnimation from './pages/BookAnimation/BookAnimation';
 
 function Router() {
   return (
@@ -19,6 +22,9 @@ function Router() {
         <Route path="/write" element={<Write />} />
         <Route path="/login" element={<Login />} />
         <Route path="/oauth/callback/kakao" element={<Redirect />} />
+        <Route path="/myPage" element={<MyPage />} />
+        <Route path="/myPageProfileEdit" element={<MyPageProfileEdit />} />
+        <Route path="/bookAnimation" element={<BookAnimation />} />
       </Routes>
     </BrowserRouter>
   );

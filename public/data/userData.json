@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "숨들",
+    "description": "숨들 편집장",
+    "avatar": "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2080&q=80",
+    "subscriber": 79,
+    "interestedAuthor": 117
+  },
+  {
+    "id": 2,
+    "name": "페르소나",
+    "description": "칼럼니스트",
+    "avatar": "https://img1.daumcdn.net/thumb/C500x500.fjpg/?fname=http://t1.daumcdn.net/brunch/service/user/ZmX/image/T9JOR-I3bYx1q5QtVjQR_N79krc.JPG",
+    "subscriber": 89,
+    "interestedAuthor": 3
+  },
+  {
+    "id": 3,
+    "name": "숨들",
+    "description": "숨들 편집장",
+    "avatar": "https://img1.daumcdn.net/thumb/C500x500.fjpg/?fname=http://t1.daumcdn.net/brunch/service/user/ZmX/image/T9JOR-I3bYx1q5QtVjQR_N79krc.JPG",
+    "subscriber": 79,
+    "interestedAuthor": 117
+  }
+]
