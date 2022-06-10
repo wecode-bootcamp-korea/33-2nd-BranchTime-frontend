@@ -4,32 +4,36 @@ import { useNavigate } from 'react-router-dom';
 
 const MyPageProfileEdit = () => {
   const navigate = useNavigate();
+  const [userList, setUserList] = useState([]);
+  const [image, setImage] = useState(
+    userList.avatar ||
+      'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2080&q=80'
+  );
+  const [imageFile, setImgFile] = useState();
+  const fileInput = useRef(null);
 
   const goToMyPage = () => {
     navigate('/myPage');
   };
 
-  const [userList, setUserList] = useState([]);
   useEffect(() => {
-    fetch('/data/userData.json')
+    fetch('http://10.58.6.151:8000/users/mypage', {
+      headers: {
+        Authorization: localStorage.getItem('Authorization'),
+      },
+    })
       .then(res => res.json())
-      .then(userList => setUserList(userList));
+      .then(userList => {
+        setUserList(userList.user_detail);
+        setImage(userList.user_detail.avatar);
+      });
   }, []);
-
-  const [image, setImage] = useState(
-    'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2080&q=80'
-  );
-  const fileInput = useRef(null);
 
   const changeProfile = e => {
     if (e.target.files[0]) {
-      setImage(e.target.files[0]);
-    } else {
-      setImage(
-        'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2080&q=80'
-      );
-      return;
+      setImgFile(e.target.files[0]);
     }
+
     const reader = new FileReader();
     reader.onload = () => {
       if (reader.readyState === 2) {
@@ -42,23 +46,51 @@ const MyPageProfileEdit = () => {
   const [postItmes, setPostItems] = useState({
     authorName: '',
     authorDescription: '',
-    avatar: '',
   });
 
   const inputTransfer = e => {
+    const { value, src, name } = e.target;
+    if (name === 'profile_img') {
+      setPostItems({
+        ...postItmes,
+        [name]: src,
+      });
+    }
     setPostItems({
       ...postItmes,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
   };
 
-  const postProfile = () => {
-    fetch();
+  // toDo: const fileChange = e => {
+  //   const file = e.target.files;
+  //   setPostItems({ avatar: file });
+  // };
+
+  const formDataPost = e => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('image', imageFile);
+    formData.append('name', postItmes.authorName);
+    formData.append('description', postItmes.authorDescription);
+    fetch(`http://10.58.6.151:8000/users/profileupdate`, {
+      method: 'POST',
+      headers: {
+        Authorization: localStorage.getItem('Authorization'),
+      },
+      body: formData,
+    }).then(res => {
+      if (res => res === 'SUCCESS') {
+        navigate('/myPage');
+      } else {
+        alert('잘못된 요청입니다');
+      }
+    });
   };
 
   return (
     <div>
-      {userList[0] && (
+      {userList && (
         <UserInfoContainer>
           <UserContainer>
             <HeaderLeft>
@@ -67,7 +99,7 @@ const MyPageProfileEdit = () => {
                   작가명<span>*</span>
                 </AuthorName>
                 <Author
-                  defaultValue={userList[0].name}
+                  defaultValue={userList.name}
                   name="authorName"
                   onChange={inputTransfer}
                 />
@@ -77,14 +109,14 @@ const MyPageProfileEdit = () => {
                   소개<span>*</span>
                 </Introduce>
                 <AuthorDescription
-                  defaultValue={userList[0].description}
+                  defaultValue={userList.description}
                   name="authorDescription"
                   onChange={inputTransfer}
                 />
               </DescriptionContainer>
               <BtnContainer>
                 <CancleBtn onClick={goToMyPage}>취소하기</CancleBtn>
-                <SaveBtn onClick={postProfile}>저장하기</SaveBtn>
+                <SaveBtn onClick={formDataPost}>저장하기</SaveBtn>
               </BtnContainer>
             </HeaderLeft>
             <HeaderRight>
@@ -96,7 +128,6 @@ const MyPageProfileEdit = () => {
                   }}
                   alt="profile"
                   name="avatar"
-                  onChange={inputTransfer}
                 />
                 <UploadAvatar
                   type="file"
