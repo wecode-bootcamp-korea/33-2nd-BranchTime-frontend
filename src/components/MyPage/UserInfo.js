@@ -18,20 +18,31 @@ const UserInfo = () => {
 
   const [userList, setUserList] = useState([]);
   useEffect(() => {
-    fetch('/data/userData.json')
+    fetch('http://10.58.6.151:8000/users/mypage', {
+      headers: {
+        Authorization: localStorage.getItem('Authorization'),
+      },
+    })
       .then(res => res.json())
       .then(userList => setUserList(userList));
   }, []);
+
   return (
     <UserInfoContainer>
       <UserContainer>
         <HeaderLeft>
-          <Author>{userList[0]?.name}</Author>
-          <AuthorDescription>{userList[0]?.description}</AuthorDescription>
+          {userList.user_detail && <Author>{userList.user_detail.name}</Author>}
+          {userList.user_detail && (
+            <AuthorDescription>
+              {userList.user_detail.description}
+            </AuthorDescription>
+          )}
         </HeaderLeft>
         <HeaderRight>
           <UserAvatar>
-            <AvatarProfile src={userList[0]?.avatar} alt="profile" />
+            {userList.user_detail && (
+              <AvatarProfile src={userList.user_detail.avatar} alt="profile" />
+            )}
           </UserAvatar>
         </HeaderRight>
       </UserContainer>
@@ -39,11 +50,15 @@ const UserInfo = () => {
         <Interested>
           <Subscriber>
             <SubsMargin>구독자</SubsMargin>
-            <SubsData>{userList[0]?.subscriber}</SubsData>
+            {userList.user_detail && (
+              <SubsData>{userList.user_detail.subscriber}</SubsData>
+            )}
           </Subscriber>
           <div className="interestedWriter">
             <SubsMargin>관심작가</SubsMargin>
-            <SubsData>{userList[0]?.interestedAuthor}</SubsData>
+            {userList.user_detail && (
+              <SubsData>{userList.user_detail.interestedAuthor}</SubsData>
+            )}
           </div>
         </Interested>
         <SubscribeBtn>

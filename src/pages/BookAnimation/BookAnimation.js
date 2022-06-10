@@ -172,7 +172,7 @@ const BookContainer = styled.section`
   justify-content: center;
   align-items: center;
   margin-top: 4rem;
-  margin-bottom: 3rem;
+  margin-bottom: 4rem;
 `;
 
 const BookSubject = styled.div`
