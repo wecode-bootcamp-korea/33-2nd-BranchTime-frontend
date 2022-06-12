@@ -1,8 +1,8 @@
 import { AiOutlineMenu } from 'react-icons/ai';
 import { CgSearch } from 'react-icons/cg';
 import styled, { css } from 'styled-components';
-import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import SideDrawer from './SideDrawer';
 import GlobalFonts from '../../fonts/fonts';
 import Login from '../../pages/Login/Login';
@@ -10,6 +10,7 @@ import Login from '../../pages/Login/Login';
 const Nav = () => {
   const [navDrawer, setNavDrawer] = useState(false);
   const [loginModal, setLoginModal] = useState(false);
+  const [navBar, SetNavBar] = useState(false);
 
   const startLogin = () => {
     setLoginModal(true);
@@ -23,15 +24,30 @@ const Nav = () => {
   const handleNavDrawer = () => {
     setNavDrawer(prev => !prev);
   };
+
+  const changeNavStyle = () => {
+    if (window.scrollY >= 80) {
+      SetNavBar(false);
+    } else {
+      SetNavBar(true);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', changeNavStyle);
+    return () => window.removeEventListener('scroll', changeNavStyle);
+  }, [navBar]);
+
   return (
     <>
       <GlobalFonts />
       <SideDrawer navDrawer={navDrawer} closeDrawer={handleNavDrawer} />
       <Navigator pathName={location.pathname}>
+      <Navigator changeNavBar={navBar}>
         <NavWrapper>
           <NavElement>
             <NavBtn>
-              <AiOutlineMenu size={25} />
+              <AiOutlineMenu onClick={handleNavDrawer} size={25} />
             </NavBtn>
             <NavBtn>
               <img src="/images/branchTime.png" alt="logo" />
@@ -52,24 +68,32 @@ const Nav = () => {
 
 export default Nav;
 
-const Navigator = styled.section`
+const Navigator = styled.div`
   position: relative;
-  background-color: white 0.5;
-  border-bottom: 1px solid #eee;
-  position: fixed;
+  position: sticky;
   width: 100vw;
 
   ${({ pathName }) =>
     pathName === '/post_list' &&
     css`
       border-bottom: none;
+  top: 0;
+  background-color: white;
+  z-index: 1000;
+
+  ${props =>
+    !props.changeNavBar &&
+    css`
+      background-color: rgba(255, 255, 255, 0.5);
+      border-bottom: 1px solid #eee;
     `}
-`;
+`};
 
 const NavWrapper = styled.div`
   ${({ theme }) => theme.flex.flexBox('', '', 'space-between')}
   height: 4rem;
-  margin: 0.2rem 1rem 0 1rem;
+  margin: 0 1rem 0 1rem;
+  padding-top: 0.2rem;
 `;
 
 const NavElement = styled.span`
@@ -98,4 +122,5 @@ const NavLogin = styled.span`
   border: 1px solid #999;
   color: #999;
   font-size: 12px;
+  background-color: ${theme => theme.theme.colors.white};
 `;
