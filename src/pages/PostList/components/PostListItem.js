@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const PostListItem = () => {
   const [writeList, setWriteList] = useState([]);
@@ -10,8 +11,18 @@ const PostListItem = () => {
       .then(data => setWriteList(data));
   }, []);
 
+  const fetchData = () => {
+    fetch('/data/WRITE_LIST.json')
+      .then(res => res.json())
+      .then(data => setWriteList([...writeList, ...data]));
+  };
+
   return (
-    <>
+    <InfiniteScroll
+      dataLength={writeList.length}
+      next={fetchData}
+      hasMore={true}
+    >
       {writeList.map(
         ({
           id,
@@ -49,7 +60,7 @@ const PostListItem = () => {
           </Li>
         )
       )}
-    </>
+    </InfiniteScroll>
   );
 };
 

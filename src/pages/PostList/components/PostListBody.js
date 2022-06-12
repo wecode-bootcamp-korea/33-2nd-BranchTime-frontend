@@ -21,7 +21,7 @@ export default PostListBody;
 const Body = styled.main`
   padding: 1.875rem 0 6.938rem;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   background-color: ${({ theme }) => theme.colors.bgGray};
 `;
 
