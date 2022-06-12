@@ -1,7 +1,8 @@
 import { AiOutlineMenu } from 'react-icons/ai';
 import { CgSearch } from 'react-icons/cg';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import SideDrawer from './SideDrawer';
 import GlobalFonts from '../../fonts/fonts';
 import Login from '../../pages/Login/Login';
@@ -17,6 +18,7 @@ const Nav = () => {
   const quitLogin = () => {
     setLoginModal(false);
   };
+  const location = useLocation();
 
   const handleNavDrawer = () => {
     setNavDrawer(prev => !prev);
@@ -25,7 +27,7 @@ const Nav = () => {
     <>
       <GlobalFonts />
       <SideDrawer navDrawer={navDrawer} closeDrawer={handleNavDrawer} />
-      <Navigator>
+      <Navigator pathName={location.pathname}>
         <NavWrapper>
           <NavElement>
             <NavBtn>
@@ -56,6 +58,12 @@ const Navigator = styled.section`
   border-bottom: 1px solid #eee;
   position: fixed;
   width: 100vw;
+
+  ${({ pathName }) =>
+    pathName === '/post_list' &&
+    css`
+      border-bottom: none;
+    `}
 `;
 
 const NavWrapper = styled.div`

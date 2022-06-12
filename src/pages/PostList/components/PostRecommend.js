@@ -35,6 +35,7 @@ export default PostRecommend;
 
 const Aside = styled.aside`
   width: 13.75rem;
+  height: 23rem;
   padding: ${({ theme }) => theme.paddings.xl};
   background-color: ${({ theme }) => theme.colors.white};
   cursor: pointer;
