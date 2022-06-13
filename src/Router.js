@@ -5,6 +5,8 @@ import Main from './pages/main/Main';
 import PostList from './pages/PostList/PostList';
 import PostDetail from './pages/PostDetail/PostDetail';
 import Write from './pages/write/Write';
+import Login from './pages/Login/Login';
+import Redirect from './pages/Login/Redirect';
 
 function Router() {
   return (
@@ -15,6 +17,8 @@ function Router() {
         <Route path="/post_list" element={<PostList />} />
         <Route path="/post_detail" element={<PostDetail />} />
         <Route path="/write" element={<Write />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/oauth/callback/kakao" element={<Redirect />} />
       </Routes>
     </BrowserRouter>
   );
