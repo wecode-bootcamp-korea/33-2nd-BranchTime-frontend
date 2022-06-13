@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "text": "출간·기고",
+    "value": "publish",
+    "htmlFor": "proposePublish"
+  },
+  {
+    "id": 2,
+    "text": "강연·섭외",
+    "value": "speech",
+    "htmlFor": "proposeLecture"
+  },
+  {
+    "id": 3,
+    "text": "작업요청",
+    "value": "emailValue",
+    "htmlFor": "proposeAsk"
+  },
+  {
+    "id": 4,
+    "text": "기타",
+    "value": "etc",
+    "htmlFor": "proposeEtc"
+  }
+]
