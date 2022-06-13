@@ -9,7 +9,7 @@ import Slider from 'react-slick/lib/slider';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 // import { useNavigate } from 'react-router-dom';
-import { KAKAO_AUTH_URL } from './OAuth';
+import { GITHUB_AUTH_URL, KAKAO_AUTH_URL, NAVER_AUTH_URL } from './OAuth';
 
 const Login = ({ quitLogin }) => {
   const settings = {
@@ -50,13 +50,13 @@ const Login = ({ quitLogin }) => {
             <StartBox>
               <StartTitle>브랜치타임 시작하기</StartTitle>
             </StartBox>
-            {SOCIAL_LOGIN.map(({ id, icon, text, color, bgcolor }) => {
+            {SOCIAL_LOGIN.map(({ id, icon, text, color, bgcolor, href }) => {
               return (
                 <SocialLoginBox
                   key={id}
                   color={color}
                   bgcolor={bgcolor}
-                  href={KAKAO_AUTH_URL}
+                  href={href}
                 >
                   <span>{icon}</span>
                   <SocialSpan>{text}</SocialSpan>
@@ -214,6 +214,7 @@ const SOCIAL_LOGIN = [
     icon: <RiKakaoTalkFill size={22} />,
     text: '카카오 계정으로 시작하기',
     bgcolor: '#ffe500',
+    href: `${KAKAO_AUTH_URL}`,
   },
   {
     id: 2,
@@ -221,6 +222,7 @@ const SOCIAL_LOGIN = [
     text: '깃허브 계정으로 시작하기',
     color: 'white',
     bgcolor: 'black',
+    href: `${GITHUB_AUTH_URL}`,
   },
   {
     id: 3,
@@ -235,6 +237,7 @@ const SOCIAL_LOGIN = [
     text: '네이버 계정으로 시작하기',
     color: 'white',
     bgcolor: '#03cf5b',
+    href: `${NAVER_AUTH_URL}`,
   },
   {
     id: 5,

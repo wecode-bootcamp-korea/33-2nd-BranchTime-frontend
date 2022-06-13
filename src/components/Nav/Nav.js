@@ -77,12 +77,8 @@ const Nav = () => {
       <Navigator changeNavBar={navBar} currentURL={currentURL}>
         <NavWrapper>
           <NavElement>
-            <NavBtn>
-              <AiOutlineMenu
-                currentURL={currentURL}
-                onClick={handleNavDrawer}
-                size={25}
-              />
+            <NavBtn onClick={handleNavDrawer}>
+              <AiOutlineMenu size={25} />
             </NavBtn>
             <NavBtn onClick={goToMain}>
               {currentURL !== '/write' && (
