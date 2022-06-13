@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 const PostListItem = () => {
   const [writeList, setWriteList] = useState([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch('/data/WRITE_LIST.json')
@@ -17,6 +20,10 @@ const PostListItem = () => {
       .then(data => setWriteList([...writeList, ...data]));
   };
 
+  const onClickMove = () => {
+    navigate('/post_detail');
+  };
+
   return (
     <InfiniteScroll
       dataLength={writeList.length}
@@ -24,17 +31,20 @@ const PostListItem = () => {
       hasMore={true}
     >
       {writeList.map(
-        ({
-          id,
-          title,
-          subTitle,
-          desc,
-          commentCount,
-          writeTime,
-          wirteUser,
-          imgSrc,
-        }) => (
-          <Li key={id}>
+        (
+          {
+            id,
+            title,
+            subTitle,
+            desc,
+            commentCount,
+            writeTime,
+            wirteUser,
+            imgSrc,
+          },
+          i
+        ) => (
+          <Li key={i} onClick={onClickMove}>
             <ImgItemWrap>
               <ItemDesc>
                 <Title>{title}</Title>

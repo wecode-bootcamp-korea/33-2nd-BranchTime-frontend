@@ -10,6 +10,7 @@ import Redirect from './pages/Login/Redirect';
 import MyPage from './pages/MyPage/MyPage';
 import MyPageProfileEdit from './pages/MyPage/MyPageProfileEdit';
 import BookAnimation from './pages/BookAnimation/BookAnimation';
+import Suggestion from './pages/Suggestion/Suggestion';
 
 function Router() {
   return (
@@ -26,6 +27,7 @@ function Router() {
         <Route path="/myPageProfileEdit" element={<MyPageProfileEdit />} />
         <Route path="/bookAnimation" element={<BookAnimation />} />
         <Route path="/write" element={<Write />} />
+        <Route path="/suggestion" element={<Suggestion />} />
       </Routes>
     </BrowserRouter>
   );
