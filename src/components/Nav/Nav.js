@@ -4,14 +4,23 @@ import styled from 'styled-components';
 import React, { useState } from 'react';
 import SideDrawer from './SideDrawer';
 import GlobalFonts from '../../fonts/fonts';
+import Login from '../../pages/Login/Login';
 
 const Nav = () => {
   const [navDrawer, setNavDrawer] = useState(false);
+  const [loginModal, setLoginModal] = useState(false);
+
+  const startLogin = () => {
+    setLoginModal(true);
+  };
+
+  const quitLogin = () => {
+    setLoginModal(false);
+  };
 
   const handleNavDrawer = () => {
     setNavDrawer(prev => !prev);
   };
-
   return (
     <>
       <GlobalFonts />
@@ -19,7 +28,7 @@ const Nav = () => {
       <Navigator>
         <NavWrapper>
           <NavElement>
-            <NavBtn onClick={handleNavDrawer}>
+            <NavBtn>
               <AiOutlineMenu size={25} />
             </NavBtn>
             <NavBtn>
@@ -28,12 +37,13 @@ const Nav = () => {
           </NavElement>
           <NavElement>
             <NavBtn>
-              <NavLogin>시작하기</NavLogin>
+              <NavLogin onClick={startLogin}>시작하기</NavLogin>
               <CgSearch size={25} />
             </NavBtn>
           </NavElement>
         </NavWrapper>
       </Navigator>
+      {loginModal && <Login quitLogin={quitLogin} />}
     </>
   );
 };
