@@ -5,12 +5,10 @@ import Main from './pages/main/Main';
 import PostList from './pages/PostList/PostList';
 import PostDetail from './pages/PostDetail/PostDetail';
 import Write from './pages/write/Write';
+import KakaoRedirect from './pages/Login/KakaoRedirect';
 import Login from './pages/Login/Login';
-import Redirect from './pages/Login/Redirect';
-import MyPage from './pages/MyPage/MyPage';
-import MyPageProfileEdit from './pages/MyPage/MyPageProfileEdit';
-import BookAnimation from './pages/BookAnimation/BookAnimation';
-import Suggestion from './pages/Suggestion/Suggestion';
+import GithubRedirect from './pages/Login/GithubRedirect';
+import NaverRedirect from './pages/Login/NaverRedirect';
 
 function Router() {
   return (
@@ -18,17 +16,14 @@ function Router() {
       <Nav />
       <Routes>
         <Route path="/" element={<Nav />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/main" element={<Main />} />
         <Route path="/post_list" element={<PostList />} />
         <Route path="/post_detail" element={<PostDetail />} />
         <Route path="/write" element={<Write />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/oauth/callback/kakao" element={<Redirect />} />
-        <Route path="/myPage" element={<MyPage />} />
-        <Route path="/myPageProfileEdit" element={<MyPageProfileEdit />} />
-        <Route path="/bookAnimation" element={<BookAnimation />} />
-        <Route path="/write" element={<Write />} />
-        <Route path="/suggestion" element={<Suggestion />} />
+        <Route path="/oauth/callback/kakao" element={<KakaoRedirect />} />
+        <Route path="/oauth/callback/github" element={<GithubRedirect />} />
+        <Route path="/oauth/callback/naver" element={<NaverRedirect />} />
       </Routes>
     </BrowserRouter>
   );
