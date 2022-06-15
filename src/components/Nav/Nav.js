@@ -1,7 +1,7 @@
 import { AiOutlineMenu } from 'react-icons/ai';
 import { CgSearch } from 'react-icons/cg';
 import styled, { css } from 'styled-components';
-import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import SideDrawer from './SideDrawer';
 import GlobalFonts from '../../fonts/fonts';
@@ -11,6 +11,7 @@ const Nav = () => {
   const [navDrawer, setNavDrawer] = useState(false);
   const [loginModal, setLoginModal] = useState(false);
   const [navBar, SetNavBar] = useState(false);
+  const navigate = useNavigate();
 
   const startLogin = () => {
     setLoginModal(true);
@@ -19,7 +20,6 @@ const Nav = () => {
   const quitLogin = () => {
     setLoginModal(false);
   };
-  const location = useLocation();
 
   const handleNavDrawer = () => {
     setNavDrawer(prev => !prev);
@@ -38,18 +38,43 @@ const Nav = () => {
     return () => window.removeEventListener('scroll', changeNavStyle);
   }, [navBar]);
 
+  const goToMain = () => {
+    navigate('/main');
+  };
+
+  const goToMyPage = () => {
+    navigate('/myPage');
+  };
+
+  const goToWrite = () => {
+    navigate('/write');
+  };
+
+  const goToBook = () => {
+    navigate('/bookAnimation');
+  };
+
   return (
     <>
       <GlobalFonts />
-      <SideDrawer navDrawer={navDrawer} closeDrawer={handleNavDrawer} />
-      <Navigator pathName={location.pathname}>
+      <SideDrawer
+        goToMain={goToMain}
+        goToWrite={goToWrite}
+        goToMyPage={goToMyPage}
+        goToBook={goToBook}
+        navDrawer={navDrawer}
+        closeDrawer={handleNavDrawer}
+        startLogin={startLogin}
+        quitLogin={quitLogin}
+        loginModal={loginModal}
+      />
       <Navigator changeNavBar={navBar}>
         <NavWrapper>
           <NavElement>
             <NavBtn>
               <AiOutlineMenu onClick={handleNavDrawer} size={25} />
             </NavBtn>
-            <NavBtn>
+            <NavBtn onClick={goToMain}>
               <img src="/images/branchTime.png" alt="logo" />
             </NavBtn>
           </NavElement>
@@ -73,21 +98,13 @@ const Navigator = styled.div`
   position: sticky;
   width: 100vw;
 
-  ${({ pathName }) =>
-    pathName === '/post_list' &&
-    css`
-      border-bottom: none;
-  top: 0;
-  background-color: white;
-  z-index: 1000;
-
   ${props =>
     !props.changeNavBar &&
     css`
       background-color: rgba(255, 255, 255, 0.5);
       border-bottom: 1px solid #eee;
     `}
-`};
+`;
 
 const NavWrapper = styled.div`
   ${({ theme }) => theme.flex.flexBox('', '', 'space-between')}

@@ -80,6 +80,7 @@ const LoginBody = styled.div`
   top: 0;
   position: fixed;
   background-color: rgba(0, 0, 0, 0.3);
+  z-index: 10000;
 `;
 
 const LoginModal = styled.div`

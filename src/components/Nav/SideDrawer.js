@@ -2,6 +2,10 @@ import styled, { css } from 'styled-components';
 import Login from '../../pages/Login/Login';
 
 const SideDrawer = ({
+  goToMain,
+  goToWrite,
+  goToMyPage,
+  goToBook,
   loginModal,
   startLogin,
   quitLogin,
@@ -13,29 +17,36 @@ const SideDrawer = ({
       {loginModal && <Login quitLogin={quitLogin} />}
       <DrawerBar drawerState={navDrawer}>
         <DrawerHeader>
-          <ProfileImg>
-            <img src="/images/bread.png" alt="profile" />
-          </ProfileImg>
-          <ProfileText>
-            you can code anything
-            <br />
-            what you imagine
-            <div>- King God Kyeom -</div>
-          </ProfileText>
+          <MyProfile onClick={goToMyPage}>
+            <ProfileImg>
+              <img src="/images/bread.png" alt="profile" />
+            </ProfileImg>
+            <ProfileText>
+              you can code anything
+              <br />
+              what you imagine
+              <div>- King God Kyeom -</div>
+            </ProfileText>
+          </MyProfile>
           <HeaderLoginBtn onClick={startLogin}>
             브랜치타임 시작하기
           </HeaderLoginBtn>
+          <HeaderLoginBtn onClick={goToWrite}>글쓰기</HeaderLoginBtn>
         </DrawerHeader>
         <DrawerBody>
-          <button>브런치 홈</button>
-          <button>브런치 나우</button>
-          <button>브런치 책방</button>
+          <button onClick={goToMain}>브런치 홈</button>
+          <button onClick={goToBook}>브런치 북</button>
         </DrawerBody>
       </DrawerBar>
       <DrawerBackground drawerState={navDrawer} onClick={closeDrawer} />
     </>
   );
 };
+
+const MyProfile = styled.div`
+  ${({ theme }) => theme.flex.flexBox('column')}
+  cursor: pointer;
+`;
 
 const DrawerBackground = styled.div`
   position: fixed;
