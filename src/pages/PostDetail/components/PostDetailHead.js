@@ -4,29 +4,23 @@ import PostDetailNav from './PostDetailNav';
 
 const PostDetailHead = () => {
   return (
-    <>
-      <PostDetailNav />
+    <Cover>
+      <CoverImg>
+        <Titlewarp>
+          <CoverTitleWarp>
+            <CoverTitle>UX 디자인 프로세스에서 러프스케치의 역할은?</CoverTitle>
+            <CoverSubTitle>전민수 UX TV 시리즈</CoverSubTitle>
+            <CoverDesc>
+              <span>by UX 컨설턴트 전민수</span>
+              <IcoDot />
+              <span>1시간전</span>
+            </CoverDesc>
+          </CoverTitleWarp>
 
-      <Cover>
-        <CoverImg>
-          <Titlewarp>
-            <CoverTitleWarp>
-              <CoverTitle>
-                UX 디자인 프로세스에서 러프스케치의 역할은?
-              </CoverTitle>
-              <CoverSubTitle>전민수 UX TV 시리즈</CoverSubTitle>
-              <CoverDesc>
-                <span>by UX 컨설턴트 전민수</span>
-                <IcoDot />
-                <span>1시간전</span>
-              </CoverDesc>
-            </CoverTitleWarp>
-
-            <CoverInner />
-          </Titlewarp>
-        </CoverImg>
-      </Cover>
-    </>
+          <CoverInner />
+        </Titlewarp>
+      </CoverImg>
+    </Cover>
   );
 };
 

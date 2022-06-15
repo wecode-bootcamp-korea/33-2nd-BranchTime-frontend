@@ -15,6 +15,7 @@ import Suggestion from './pages/Suggestion/Suggestion';
 function Router() {
   return (
     <BrowserRouter>
+      <Nav />
       <Routes>
         <Route path="/" element={<Nav />} />
         <Route path="/main" element={<Main />} />
