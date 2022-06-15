@@ -6,7 +6,6 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { GrLinkPrevious, GrLinkNext } from 'react-icons/gr';
 import { GiTreeBranch } from 'react-icons/gi';
-import Nav from '../../components/Nav/Nav';
 
 const Main = () => {
   const settings = {
@@ -38,7 +37,6 @@ const Main = () => {
   };
   return (
     <>
-      <Nav />
       <MainWrapper>
         <IntroBrunch>
           <IntroH3>

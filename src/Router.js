@@ -14,6 +14,7 @@ import BookAnimation from './pages/BookAnimation/BookAnimation';
 function Router() {
   return (
     <BrowserRouter>
+      <Nav />
       <Routes>
         <Route path="/" element={<Nav />} />
         <Route path="/main" element={<Main />} />
