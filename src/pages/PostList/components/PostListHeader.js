@@ -1,45 +1,38 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 const PostListHeader = () => {
+  const [category, setCategory] = useState([]);
+  const [subCategory, setSubCategory] = useState([]);
+
+  useEffect(() => {
+    fetch('http://10.58.2.42:8000/contents/postlist/1')
+      .then(res => res.json())
+      .then(data => {
+        setCategory(data.post_list.title_list);
+        setSubCategory(data.post_list.sub_title);
+      });
+  }, []);
+
   return (
-    <Wrapper>
-      <Title>IT 트렌드</Title>
-      <Ul>
-        {subCategories.map(({ id, title }) => (
-          <SubCate key={id}>
-            <Button>{title}</Button>
-          </SubCate>
-        ))}
-      </Ul>
-    </Wrapper>
+    <>
+      {category.map(({ main_id, main_title }) => (
+        <Wrapper key={main_id}>
+          <Title>{main_title}</Title>
+          <Ul>
+            {subCategory.map(({ sub_id, sub_title }) => (
+              <SubCate key={sub_id}>
+                <Button>{sub_title}</Button>
+              </SubCate>
+            ))}
+          </Ul>
+        </Wrapper>
+      ))}
+    </>
   );
 };
 
 export default PostListHeader;
-
-const subCategories = [
-  {
-    id: 1,
-    title: 'IT',
-  },
-  {
-    id: 2,
-    title: 'HTML/CSS',
-  },
-  {
-    id: 3,
-    title: 'JavaScript',
-  },
-  {
-    id: 4,
-    title: 'React',
-  },
-  {
-    id: 5,
-    title: 'TypeScript',
-  },
-];
 
 const Wrapper = styled.section`
   padding: 4rem 0 2rem 0;
