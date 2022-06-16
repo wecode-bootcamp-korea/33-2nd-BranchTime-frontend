@@ -3,6 +3,8 @@ import styled, { css } from 'styled-components';
 import Login from '../../pages/Login/Login';
 
 const SideDrawer = ({
+  isActive,
+  setIsActive,
   goToMain,
   goToWrite,
   goToMyPage,
@@ -13,6 +15,11 @@ const SideDrawer = ({
   navDrawer,
   closeDrawer,
 }) => {
+  const logOut = () => {
+    // localStorage.removeItem('token');
+    setIsActive(false);
+  };
+
   return (
     <>
       {loginModal && <Login quitLogin={quitLogin} />}
@@ -29,17 +36,25 @@ const SideDrawer = ({
               <div>- King God Kyeom -</div>
             </ProfileText>
           </MyProfile>
-          <HeaderLoginBtn onClick={startLogin}>
-            브랜치타임 시작하기
-          </HeaderLoginBtn>
-          <HeaderLoginBtn onClick={goToWrite}>글쓰기</HeaderLoginBtn>
+          {!isActive && (
+            <HeaderLoginBtn onClick={startLogin}>
+              브랜치타임 시작하기
+            </HeaderLoginBtn>
+          )}
+          {isActive && (
+            <HeaderLoginBtn onClick={goToWrite}>글쓰기</HeaderLoginBtn>
+          )}
         </DrawerHeader>
         <DrawerBody>
-          <BtnElement>
-            <button onClick={goToMyPage}>내 브런치</button>
-            <hr />
-          </BtnElement>
-          <DivideLine />
+          {isActive && (
+            <>
+              <BtnElement>
+                <button onClick={goToMyPage}>내 브런치</button>
+                <hr />
+              </BtnElement>
+              <DivideLine />
+            </>
+          )}
           <BtnElement>
             <button onClick={goToMain}>브런치 홈</button>
             <hr />
@@ -48,12 +63,24 @@ const SideDrawer = ({
             <button onClick={goToBook}>브런치 북</button>
             <hr />
           </BtnElement>
+          {isActive && <LogOutBtn onClick={logOut}>로그아웃</LogOutBtn>}
         </DrawerBody>
       </DrawerBar>
       <DrawerBackground drawerState={navDrawer} onClick={closeDrawer} />
     </>
   );
 };
+
+const LogOutBtn = styled.button`
+  position: absolute;
+  bottom: 5%;
+  padding: 0.5rem 1rem;
+  border-radius: 10rem;
+  border: 1px solid #999;
+  color: #999;
+  background-color: white;
+  cursor: pointer;
+`;
 
 const DivideLine = styled.hr`
   width: 60%;
@@ -83,10 +110,10 @@ const DrawerBackground = styled.div`
 
 const ProfileText = styled.h5`
   font-family: 'ItalianStyleLtIt';
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 
   div {
-    margin: 0.6rem;
+    margin-top: 1rem;
     color: #999;
   }
 `;
