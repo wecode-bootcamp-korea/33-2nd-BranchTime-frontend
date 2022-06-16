@@ -20,7 +20,7 @@ const MyPageProfileEdit = () => {
   useEffect(() => {
     fetch(`${BASE_URL}users/mypage`, {
       headers: {
-        Authorization: localStorage.getItem('Authorization'),
+        Authorization: localStorage.getItem('tokken'),
       },
     })
       .then(res => res.json())
@@ -72,7 +72,7 @@ const MyPageProfileEdit = () => {
     fetch(`${BASE_URL}users/profileupdate`, {
       method: 'POST',
       headers: {
-        Authorization: localStorage.getItem('Authorization'),
+        Authorization: localStorage.getItem('tokken'),
       },
       body: formData,
     }).then(res => {
