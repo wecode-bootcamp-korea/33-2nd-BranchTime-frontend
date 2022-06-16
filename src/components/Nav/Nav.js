@@ -47,7 +47,7 @@ const Nav = () => {
   }, [currentURL]);
 
   const goToMain = () => {
-    navigate('/main');
+    navigate('/');
     setNavDrawer(false);
   };
 
