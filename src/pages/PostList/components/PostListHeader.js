@@ -1,14 +1,42 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { BASE_URL } from '../../../config';
 
 const PostListHeader = () => {
+  const [category, setCategory] = useState([]);
+  const [subCategory, setSubCategory] = useState([]);
+  const params = useParams();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    fetch(`${BASE_URL}contents/postlist/${params.id}`)
+      .then(res => res.json())
+      .then(data => {
+        setCategory(data.post_list.title_list);
+        setSubCategory(data.post_list.sub_title);
+      });
+  }, [params.id]);
+
+  const { main_title } = category;
+
+  const onSubCateMove = id => {
+    navigate(`?subcategory=${id}`);
+  };
+
   return (
     <Wrapper>
-      <Title>IT 트렌드</Title>
+      <Title>{main_title}</Title>
       <Ul>
-        {subCategories.map(({ id, title }) => (
-          <SubCate key={id}>
-            <Button>{title}</Button>
+        {subCategory.map(({ sub_id, sub_title }) => (
+          <SubCate
+            key={sub_id}
+            onClick={e => {
+              onSubCateMove(sub_id);
+              e.preventDefault();
+            }}
+          >
+            <Button>{sub_title}</Button>
           </SubCate>
         ))}
       </Ul>
@@ -17,29 +45,6 @@ const PostListHeader = () => {
 };
 
 export default PostListHeader;
-
-const subCategories = [
-  {
-    id: 1,
-    title: 'IT',
-  },
-  {
-    id: 2,
-    title: 'HTML/CSS',
-  },
-  {
-    id: 3,
-    title: 'JavaScript',
-  },
-  {
-    id: 4,
-    title: 'React',
-  },
-  {
-    id: 5,
-    title: 'TypeScript',
-  },
-];
 
 const Wrapper = styled.section`
   padding: 2rem 0;

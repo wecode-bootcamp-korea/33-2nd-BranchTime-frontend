@@ -1,7 +1,14 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const PostDetailUserProfile = ({ data }) => {
+  const navigate = useNavigate();
+
+  const onClickMove = id => {
+    navigate(`/suggestion/${id}`);
+  };
+
   return (
     <UserProfileWarpper>
       {data.map(
@@ -9,6 +16,8 @@ const PostDetailUserProfile = ({ data }) => {
           post_id,
           post_user_name,
           post_subtitle,
+          user_name,
+          user_thumbnail,
           user_introduction,
           user_subscription_count,
         }) => (
@@ -18,12 +27,12 @@ const PostDetailUserProfile = ({ data }) => {
             <UserIntroduce>{user_introduction}</UserIntroduce>
 
             <UserProfile>
-              <Img src="/images/bread.png" alt="임시프로필" />
+              <Img src={user_thumbnail} alt={user_name} />
             </UserProfile>
 
             <SubscribeWrap>
               <Subscribe>구독자 {user_subscription_count}</Subscribe>
-              <Button>제안하기</Button>
+              <Button onClick={() => onClickMove(post_id)}>제안하기</Button>
             </SubscribeWrap>
           </Container>
         )
@@ -73,7 +82,7 @@ const UserProfile = styled.div`
 `;
 
 const Img = styled.img`
-  width: 100%;
+  height: 100%;
 `;
 
 const SubscribeWrap = styled.div`

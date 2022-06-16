@@ -9,7 +9,6 @@ const PostDetailMentTextarea = ({
   fileRef,
   handleFileOnChange,
   handleFileButtonClick,
-  commentSubmit,
 }) => {
   return (
     <TextareaBox>
@@ -33,7 +32,7 @@ const PostDetailMentTextarea = ({
         <MdOutlineInsertPhoto size="20" />
       </PhotoFileBtn>
 
-      <Button onClick={commentSubmit}>확인</Button>
+      <Button onClick={handleFileOnChange}>확인</Button>
     </TextareaBox>
   );
 };

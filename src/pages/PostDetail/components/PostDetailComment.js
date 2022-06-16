@@ -1,16 +1,33 @@
 import React, { useRef, useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { BsChatDots } from 'react-icons/bs';
 import PostDetailMentTextarea from './PostDetailMentTextarea';
+import { BASE_URL } from '../../../config';
 
-const PostDetailComment = ({ data }) => {
+const PostDetailComment = () => {
   const [isCommentOpen, setIsCommentOpen] = useState(false);
   const [file, setFile] = useState({});
   const [previewURL, setPreviewURL] = useState('');
   const [preview, setPreview] = useState(null);
   const [commentValue, setCommentValue] = useState('');
-  const [comment, setComment] = useState([]);
+  const [comment, setComment] = useState({});
+  const params = useParams();
   const fileRef = useRef();
+
+  const token = localStorage.getItem('token');
+
+  useEffect(() => {
+    getCommentList();
+  }, []);
+
+  const getCommentList = () => {
+    fetch(`${BASE_URL}contents/${params.id}`)
+      .then(res => res.json())
+      .then(data => {
+        setComment(data.message[0].comment_information);
+      });
+  };
 
   useEffect(() => {
     if (previewURL === '') {
@@ -22,17 +39,8 @@ const PostDetailComment = ({ data }) => {
     }
   }, [previewURL, file]);
 
-  useEffect(() => {
-    fetch('/data/COMMENT_LIST.json')
-      .then(res => res.json())
-      .then(data => setComment(data));
-  }, []);
-
   const handleFileOnChange = e => {
     e.preventDefault();
-
-    const token =
-      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6Mn0.lQ0EbuckiDJz6Ep5ZCQQ4dEp7q09ePyuW2tm4ijSo4Y';
 
     const files = e.target.files[0];
     const reader = new FileReader();
@@ -47,7 +55,7 @@ const PostDetailComment = ({ data }) => {
       setPreviewURL(reader.result);
     };
 
-    fetch('http:///10.58.1.170:8001/contents/53/comment', {
+    fetch(`${BASE_URL}contents/${params.id}/comment`, {
       method: 'POST',
       headers: {
         Authorization: token,
@@ -55,9 +63,7 @@ const PostDetailComment = ({ data }) => {
       body: formData,
     }).then(res => {
       if (res.ok) {
-        // console.log('성공!');
-      } else {
-        alert('잘못된 요청입니다');
+        getCommentList();
       }
     });
 
@@ -77,31 +83,8 @@ const PostDetailComment = ({ data }) => {
     setCommentValue(e.target.value);
   };
 
-  const commentId = useRef(2);
-  const commentSubmit = e => {
-    e.preventDefault();
-
-    setComment([
-      ...comment,
-      {
-        id: commentId.current,
-        userName: 'Lemon',
-        text: commentValue,
-        imgSrc: previewURL,
-      },
-    ]);
-
-    setCommentValue('');
-
-    commentId.current += 1;
-  };
-
   const onRemove = comment_id => {
-    // e.preventDefault();
-    const token =
-      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6Mn0.lQ0EbuckiDJz6Ep5ZCQQ4dEp7q09ePyuW2tm4ijSo4Y';
-
-    fetch(`http://10.58.1.170:8001/contents/comment/${comment_id}`, {
+    fetch(`${BASE_URL}contents/comment/${comment_id}`, {
       headers: {
         Authorization: token,
       },
@@ -109,6 +92,7 @@ const PostDetailComment = ({ data }) => {
     }).then(res => {
       if (res.ok) {
         setFile('');
+        alert('정말 삭제하시겠습니까?');
       }
     });
   };
@@ -125,16 +109,16 @@ const PostDetailComment = ({ data }) => {
       {isCommentOpen && (
         <section>
           <Label>
-            댓글 <CommentSpan>{data.length}</CommentSpan>
+            댓글 <CommentSpan>{comment.length}</CommentSpan>
           </Label>
           <Hr />
           <form>
-            {data.map(
+            {comment.map(
               ({ comment_id, comment_image, user_name, comment_content }) => (
                 <CommentList key={comment_id}>
                   {comment_image && (
                     <PreviewImg>
-                      <img src={comment_image} alt="임시사진" />
+                      <img src={comment_image} alt={user_name} />
                     </PreviewImg>
                   )}
                   <CommentWrap isImage={comment_image !== ''}>
@@ -142,7 +126,14 @@ const PostDetailComment = ({ data }) => {
                     <CommentValue>{comment_content}</CommentValue>
                   </CommentWrap>
 
-                  <Delete onClick={() => onRemove(comment_id)}>삭제</Delete>
+                  <Delete
+                    onClick={e => {
+                      onRemove(comment_id);
+                      e.preventDefault();
+                    }}
+                  >
+                    삭제
+                  </Delete>
                 </CommentList>
               )
             )}
@@ -154,7 +145,6 @@ const PostDetailComment = ({ data }) => {
               fileRef={fileRef}
               handleFileOnChange={handleFileOnChange}
               handleFileButtonClick={handleFileButtonClick}
-              commentSubmit={commentSubmit}
             />
           </form>
         </section>

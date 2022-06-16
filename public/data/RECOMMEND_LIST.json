@@ -1,43 +1,43 @@
 [
   {
     "id": 1,
-    "imgSrc": "/images/bread.png",
-    "name": "러블리 김작가",
+    "imgSrc": "/images/PostDetail/detail_recommend_img1.jpg",
+    "name": "민정",
     "writeCount": 94,
     "subscribe": 18
   },
   {
     "id": 2,
-    "imgSrc": "/images/bread.png",
-    "name": "기린아빠",
+    "imgSrc": "/images/PostDetail/detail_recommend_img2.jpg",
+    "name": "윤지",
     "writeCount": 100,
     "subscribe": 400
   },
   {
     "id": 3,
-    "imgSrc": "/images/bread.png",
+    "imgSrc": "/images/PostDetail/detail_recommend_img3.jpg",
     "name": "Lemon",
     "writeCount": 158,
     "subscribe": 230
   },
   {
     "id": 4,
-    "imgSrc": "/images/bread.png",
-    "name": "WECODE",
+    "imgSrc": "/images/PostDetail/detail_recommend_img5.jpg",
+    "name": "한구",
     "writeCount": 554,
     "subscribe": 94
   },
   {
     "id": 5,
-    "imgSrc": "/images/bread.png",
-    "name": "WECODE",
+    "imgSrc": "/images/PostDetail/detail_recommend_img3.jpg",
+    "name": "행갬",
     "writeCount": 554,
     "subscribe": 94
   },
   {
     "id": 6,
-    "imgSrc": "/images/bread.png",
-    "name": "WECODE",
+    "imgSrc": "/images/PostDetail/detail_recommend_img2.jpg",
+    "name": "슬기",
     "writeCount": 554,
     "subscribe": 94
   }
