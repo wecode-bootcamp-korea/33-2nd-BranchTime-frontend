@@ -6,15 +6,21 @@ import { useState, useEffect } from 'react';
 import SideDrawer from './SideDrawer';
 import GlobalFonts from '../../fonts/fonts';
 import Login from '../../pages/Login/Login';
+import Search from '../../pages/main/search/Search';
 
 const Nav = () => {
   const [navDrawer, setNavDrawer] = useState(false);
   const [loginModal, setLoginModal] = useState(false);
+  const [search, setSearch] = useState(false);
   const [navBar, SetNavBar] = useState(false);
-  const navigate = useNavigate();
-
+  const [isActive, setIsActive] = useState(false);
   const location = useLocation();
   const currentURL = location.pathname;
+  const navigate = useNavigate();
+
+  const openSearch = () => {
+    setSearch(prev => !prev);
+  };
 
   const startLogin = () => {
     setLoginModal(true);
@@ -29,16 +35,16 @@ const Nav = () => {
   };
 
   const changeNavStyle = () => {
-    if (window.scrollY >= 30) {
-      SetNavBar(false);
-    } else {
-      SetNavBar(true);
-    }
+    window.scrollY >= 30 ? SetNavBar(false) : SetNavBar(true);
   };
 
   useEffect(() => {
     window.addEventListener('scroll', changeNavStyle);
   }, [navBar]);
+
+  useEffect(() => {
+    localStorage.getItem('token') ? setIsActive(true) : setIsActive(false);
+  }, [currentURL]);
 
   const goToMain = () => {
     navigate('/main');
@@ -64,6 +70,8 @@ const Nav = () => {
     <>
       <GlobalFonts />
       <SideDrawer
+        isActive={isActive}
+        setIsActive={setIsActive}
         goToMain={goToMain}
         goToWrite={goToWrite}
         goToMyPage={goToMyPage}
@@ -92,13 +100,16 @@ const Nav = () => {
                 <NavLogin onClick={startLogin}>시작하기</NavLogin>
               )}
               {currentURL === '/write' && <NavLogin>저장</NavLogin>}
-              {currentURL === '/main' && <CgSearch size={25} />}
+              {currentURL === '/main' && (
+                <CgSearch onClick={openSearch} size={25} />
+              )}
               {currentURL === '/post_list' && <CgSearch size={25} />}
               {currentURL === '/myPage' && <CgSearch size={25} />}
             </NavBtn>
           </NavElement>
         </NavWrapper>
       </Navigator>
+      {search && <Search />}
       {loginModal && <Login quitLogin={quitLogin} />}
     </>
   );
