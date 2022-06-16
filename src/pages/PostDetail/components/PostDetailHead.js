@@ -5,43 +5,6 @@ import PostDetailNav from './PostDetailNav';
 
 const PostDetailHead = ({ data }) => {
   return (
-<<<<<<< HEAD
-    <PostDetailHeadWarpper>
-      {/* TODO : 머지 후 Nav 합칠 예정 */}
-      <Nav />
-      <PostDetailNav data={data} />
-
-      {data.map(
-        ({
-          post_id,
-          post_title,
-          post_subtitle,
-          post_user_name,
-          post_created_at,
-          post_thumbnail_image,
-        }) => (
-          <Cover key={post_id}>
-            <CoverImg image={post_thumbnail_image}>
-              <Titlewarp>
-                <CoverTitleWarp>
-                  <CoverPositionWrap>
-                    <CoverTitle>{post_title}</CoverTitle>
-                    <CoverSubTitle>{post_subtitle}</CoverSubTitle>
-                    <CoverDesc>
-                      <span>by {post_user_name}</span>
-                      <IcoDot />
-                      <span>{post_created_at}</span>
-                    </CoverDesc>
-                  </CoverPositionWrap>
-                </CoverTitleWarp>
-              </Titlewarp>
-              <CoverInner />
-            </CoverImg>
-          </Cover>
-        )
-      )}
-    </PostDetailHeadWarpper>
-=======
     <Cover>
       <CoverImg>
         <Titlewarp>
@@ -59,7 +22,6 @@ const PostDetailHead = ({ data }) => {
         </Titlewarp>
       </CoverImg>
     </Cover>
->>>>>>> 0b594aa82303ea532f6880eacf1d04724f023053
   );
 };
 
