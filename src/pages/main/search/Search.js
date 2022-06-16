@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { HiOutlineSearch } from 'react-icons/hi';
 import { useNavigate } from 'react-router-dom';
 
-const Search = () => {
+const Search = ({ openSearch }) => {
   const navigate = useNavigate();
   const [value, setValue] = useState('');
   const [searchData, setSearchData] = useState([]);
@@ -56,10 +56,16 @@ const Search = () => {
                   list
                 );
               })
+              .slice(0, 10)
               .map(list => {
                 return (
                   <PostWrapper key={list.post_id}>
-                    <PostTitle onClick={() => goToDetail(list.post_id)}>
+                    <PostTitle
+                      onClick={() => {
+                        goToDetail(list.post_id);
+                        openSearch();
+                      }}
+                    >
                       {list.post_title}
                     </PostTitle>
                   </PostWrapper>
@@ -76,6 +82,7 @@ const Search = () => {
                 list
               );
             })
+            .slice(0, 10)
             .map(list => {
               return (
                 <WriterWrapper key={list.write_id}>
@@ -83,6 +90,7 @@ const Search = () => {
                   <WriterTitle
                     onClick={() => {
                       goToProfile(list.write_id);
+                      openSearch();
                     }}
                   >
                     {list.writeUser}
@@ -102,6 +110,11 @@ const SearchWrapper = styled.div`
   ${theme => theme.theme.flex.flexBox()}
   flex-direction: column;
   height: 100vh;
+  position: fixed;
+  width: 100%;
+  top: 5rem;
+  background-color: white;
+  z-index: 10000;
 `;
 
 const InputWrapper = styled.div`

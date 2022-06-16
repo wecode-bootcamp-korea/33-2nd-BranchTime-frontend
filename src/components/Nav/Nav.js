@@ -110,7 +110,7 @@ const Nav = () => {
           </NavElement>
         </NavWrapper>
       </Navigator>
-      {search && <Search />}
+      {search && <Search openSearch={openSearch} />}
       {loginModal && <Login quitLogin={quitLogin} />}
     </>
   );
