@@ -5,7 +5,6 @@ import { BiAlignMiddle, BiAlignLeft, BiImages } from 'react-icons/bi';
 import { AiOutlineArrowRight, AiOutlineArrowLeft } from 'react-icons/ai';
 import React, { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
-import Nav from '../../components/Nav/Nav';
 
 const Write = () => {
   const [value, setValue] = React.useState(
@@ -75,7 +74,6 @@ const Write = () => {
 
   return (
     <>
-      <Nav />
       <EditorHeader
         headerColorMode={headerColorMode}
         setColor={COLOR_SET[calculateColor]}

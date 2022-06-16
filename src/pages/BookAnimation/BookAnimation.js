@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import MyPageContent from '../../components/MyPage/MyPageContent';
 import styled, { keyframes } from 'styled-components';
-import Nav from '../../components/Nav/Nav';
 
 const BookAnimation = () => {
   const [contentList, setContentList] = useState([]);
@@ -12,33 +11,30 @@ const BookAnimation = () => {
   }, []);
 
   return (
-    <>
-      <Nav />
-      <BookAnimationContainer>
-        <BookContainer>
-          <BookSubject>
-            <img src="/images/BookAnimation/book.PNG" alt="표지" />
-          </BookSubject>
-          <BookPage1>
-            <img src="/images/BookAnimation/page1.PNG" alt="page1" />
-          </BookPage1>
-          <BookPage2>
-            <img src="/images/BookAnimation/page2.PNG" alt="page2" />
-          </BookPage2>
-          <BookPage3>
-            <img src="/images/BookAnimation/page3.PNG" alt="page3" />
-          </BookPage3>
-          <BookCover>
-            <img src="/images/BookAnimation/bookCover.PNG" alt="cover" />
-          </BookCover>
-        </BookContainer>
-        {contentList.map(contentDatas => (
-          <AnimationContainer key={contentDatas.id}>
-            <MyPageContent postItem={contentDatas} />
-          </AnimationContainer>
-        ))}
-      </BookAnimationContainer>
-    </>
+    <BookAnimationContainer>
+      <BookContainer>
+        <BookSubject>
+          <img src="/images/BookAnimation/book.PNG" alt="표지" />
+        </BookSubject>
+        <BookPage1>
+          <img src="/images/BookAnimation/page1.PNG" alt="page1" />
+        </BookPage1>
+        <BookPage2>
+          <img src="/images/BookAnimation/page2.PNG" alt="page2" />
+        </BookPage2>
+        <BookPage3>
+          <img src="/images/BookAnimation/page3.PNG" alt="page3" />
+        </BookPage3>
+        <BookCover>
+          <img src="/images/BookAnimation/bookCover.PNG" alt="cover" />
+        </BookCover>
+      </BookContainer>
+      {contentList.map(contentDatas => (
+        <AnimationContainer key={contentDatas.id}>
+          <MyPageContent postItem={contentDatas} />
+        </AnimationContainer>
+      ))}
+    </BookAnimationContainer>
   );
 };
 

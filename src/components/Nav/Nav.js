@@ -1,7 +1,7 @@
 import { AiOutlineMenu } from 'react-icons/ai';
 import { CgSearch } from 'react-icons/cg';
 import styled, { css } from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import SideDrawer from './SideDrawer';
 import GlobalFonts from '../../fonts/fonts';
@@ -12,6 +12,9 @@ const Nav = () => {
   const [loginModal, setLoginModal] = useState(false);
   const [navBar, SetNavBar] = useState(false);
   const navigate = useNavigate();
+
+  const location = useLocation();
+  const currentURL = location.pathname;
 
   const startLogin = () => {
     setLoginModal(true);
@@ -26,7 +29,7 @@ const Nav = () => {
   };
 
   const changeNavStyle = () => {
-    if (window.scrollY >= 80) {
+    if (window.scrollY >= 30) {
       SetNavBar(false);
     } else {
       SetNavBar(true);
@@ -35,23 +38,26 @@ const Nav = () => {
 
   useEffect(() => {
     window.addEventListener('scroll', changeNavStyle);
-    return () => window.removeEventListener('scroll', changeNavStyle);
   }, [navBar]);
 
   const goToMain = () => {
     navigate('/main');
+    setNavDrawer(false);
   };
 
   const goToMyPage = () => {
     navigate('/myPage');
+    setNavDrawer(false);
   };
 
   const goToWrite = () => {
     navigate('/write');
+    setNavDrawer(false);
   };
 
   const goToBook = () => {
     navigate('/bookAnimation');
+    setNavDrawer(false);
   };
 
   return (
@@ -68,20 +74,27 @@ const Nav = () => {
         quitLogin={quitLogin}
         loginModal={loginModal}
       />
-      <Navigator changeNavBar={navBar}>
+      <Navigator changeNavBar={navBar} currentURL={currentURL}>
         <NavWrapper>
           <NavElement>
-            <NavBtn>
-              <AiOutlineMenu onClick={handleNavDrawer} size={25} />
+            <NavBtn onClick={handleNavDrawer}>
+              <AiOutlineMenu size={25} />
             </NavBtn>
             <NavBtn onClick={goToMain}>
-              <img src="/images/branchTime.png" alt="logo" />
+              {currentURL !== '/write' && (
+                <img src="/images/branchTime.png" alt="logo" />
+              )}
             </NavBtn>
           </NavElement>
           <NavElement>
             <NavBtn>
-              <NavLogin onClick={startLogin}>시작하기</NavLogin>
-              <CgSearch size={25} />
+              {currentURL === '/main' && (
+                <NavLogin onClick={startLogin}>시작하기</NavLogin>
+              )}
+              {currentURL === '/write' && <NavLogin>저장</NavLogin>}
+              {currentURL === '/main' && <CgSearch size={25} />}
+              {currentURL === '/post_list' && <CgSearch size={25} />}
+              {currentURL === '/myPage' && <CgSearch size={25} />}
             </NavBtn>
           </NavElement>
         </NavWrapper>
@@ -96,13 +109,37 @@ export default Nav;
 const Navigator = styled.div`
   position: relative;
   position: sticky;
+  top: 0;
   width: 100vw;
-
   ${props =>
-    !props.changeNavBar &&
+    props.changeNavBar &&
     css`
       background-color: rgba(255, 255, 255, 0.5);
       border-bottom: 1px solid #eee;
+    `}
+
+  ${props =>
+    props.currentURL === '/write' &&
+    css`
+      position: absolute;
+      background-color: rgba(255, 255, 255, 0);
+      border-bottom: 0;
+    `}
+
+    ${props =>
+    props.currentURL === '/post_detail' &&
+    css`
+      position: absolute;
+      background-color: rgba(255, 255, 255, 0);
+      border-bottom: 0;
+    `}
+
+    ${props =>
+    props.currentURL === '/post_list' &&
+    css`
+      position: absolute;
+      background-color: rgba(255, 255, 255, 0);
+      border-bottom: 0;
     `}
 `;
 
@@ -123,7 +160,6 @@ const NavBtn = styled.button`
   border: 0;
   cursor: pointer;
   margin: 0.2rem;
-
   img {
     width: 5.2rem;
     margin-left: 0.2rem;

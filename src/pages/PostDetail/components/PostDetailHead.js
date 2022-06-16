@@ -5,6 +5,7 @@ import PostDetailNav from './PostDetailNav';
 
 const PostDetailHead = ({ data }) => {
   return (
+<<<<<<< HEAD
     <PostDetailHeadWarpper>
       {/* TODO : 머지 후 Nav 합칠 예정 */}
       <Nav />
@@ -40,6 +41,25 @@ const PostDetailHead = ({ data }) => {
         )
       )}
     </PostDetailHeadWarpper>
+=======
+    <Cover>
+      <CoverImg>
+        <Titlewarp>
+          <CoverTitleWarp>
+            <CoverTitle>UX 디자인 프로세스에서 러프스케치의 역할은?</CoverTitle>
+            <CoverSubTitle>전민수 UX TV 시리즈</CoverSubTitle>
+            <CoverDesc>
+              <span>by UX 컨설턴트 전민수</span>
+              <IcoDot />
+              <span>1시간전</span>
+            </CoverDesc>
+          </CoverTitleWarp>
+
+          <CoverInner />
+        </Titlewarp>
+      </CoverImg>
+    </Cover>
+>>>>>>> 0b594aa82303ea532f6880eacf1d04724f023053
   );
 };
 
