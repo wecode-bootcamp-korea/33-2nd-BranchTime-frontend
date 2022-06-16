@@ -9,6 +9,11 @@ import KakaoRedirect from './pages/Login/KakaoRedirect';
 import Login from './pages/Login/Login';
 import GithubRedirect from './pages/Login/GithubRedirect';
 import NaverRedirect from './pages/Login/NaverRedirect';
+import MyPage from './pages/MyPage/MyPage';
+import UserPage from './pages/userPage/UserPage';
+import MyPageProfileEdit from './pages/MyPage/MyPageProfileEdit';
+import BookAnimation from './pages/BookAnimation/BookAnimation';
+import Suggestion from './pages/Suggestion/Suggestion';
 
 function Router() {
   return (
@@ -24,6 +29,13 @@ function Router() {
         <Route path="/oauth/callback/kakao" element={<KakaoRedirect />} />
         <Route path="/oauth/callback/github" element={<GithubRedirect />} />
         <Route path="/oauth/callback/naver" element={<NaverRedirect />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/myPage" element={<MyPage />} />
+        <Route path="/userPage" element={<UserPage />} />
+        <Route path="/myPageProfileEdit" element={<MyPageProfileEdit />} />
+        <Route path="/bookAnimation" element={<BookAnimation />} />
+        <Route path="/write" element={<Write />} />
+        <Route path="/suggestion" element={<Suggestion />} />
       </Routes>
     </BrowserRouter>
   );
