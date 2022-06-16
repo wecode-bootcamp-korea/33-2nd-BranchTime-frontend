@@ -18,7 +18,7 @@ function Router() {
         <Route path="/" element={<Nav />} />
         <Route path="/login" element={<Login />} />
         <Route path="/main" element={<Main />} />
-        <Route path="/post_list" element={<PostList />} />
+        <Route path="/post_list/:id" element={<PostList />} />
         <Route path="/post_detail" element={<PostDetail />} />
         <Route path="/write" element={<Write />} />
         <Route path="/oauth/callback/kakao" element={<KakaoRedirect />} />
