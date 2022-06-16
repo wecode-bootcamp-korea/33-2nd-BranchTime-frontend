@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Footer from './footer/Footer';
 import 'slick-carousel/slick/slick.css';
@@ -7,15 +7,30 @@ import { GiTreeBranch } from 'react-icons/gi';
 import TopCarousel from './TopCarousel';
 import RecommendCarousel from './RecommendCarousel';
 
+import WriterList from './writerList/WriterList';
+import { useSearchParams } from 'react-router-dom';
 import Keyword from './keyword/Keyword';
 
 const Main = () => {
+  const [writerList, setWriterList] = useState([]);
+  let [searchParams, setSearchParams] = useSearchParams();
+
+  const category = searchParams.get('subcategory_id');
+
+  useEffect(() => {
+    fetch(`http://10.58.2.42:8000/authors/?subcategory_id=${category}`)
+      .then(res => res.json())
+      .then(data => {
+        setWriterList(data.message);
+      });
+  }, [category]);
+
   return (
     <>
       <MainWrapper>
         <IntroBrunch>
           <IntroH3>
-            개발이 작품이 되는 공간, 브랜치타임{' '}
+            개발이 작품이 되는 공간, 브랜치타임
             <GiTreeBranch className="logo" />
           </IntroH3>
           <IntroP>
@@ -40,31 +55,18 @@ const Main = () => {
           <KeywordH>BRANCH WRITERS</KeywordH>
           <KeywordSpan>브랜치 추천 작가</KeywordSpan>
           <WriterKeywordWrap>
-            <WriterButton>프론트엔드</WriterButton>
-            <WriterButton>백엔드</WriterButton>
-            <WriterButton>알고리즘</WriterButton>
+            {WRITER_CATEGORY.map(({ id, value, number }) => (
+              <WriterButton
+                key={id}
+                onClick={() => setSearchParams({ subcategory_id: `${number}` })}
+              >
+                {value}
+              </WriterButton>
+            ))}
           </WriterKeywordWrap>
           <WriterWrap>
             <ul>
-              {WRITER_LIST.map(list => {
-                const { id, src, name, job, desc, tag } = list;
-                return (
-                  <li key={id}>
-                    <a href="#!">
-                      <WriterProfile src={src} alt="writer" />
-                      <WritersName>{name}</WritersName>
-                      <WritersJob>{job}</WritersJob>
-                      <WriterDesc>{desc}</WriterDesc>
-                      <div>
-                        {tag.map(tag => {
-                          const { id, name } = tag;
-                          return <WriterButton key={id}>{name}</WriterButton>;
-                        })}
-                      </div>
-                    </a>
-                  </li>
-                );
-              })}
+              <WriterList list={writerList} />
             </ul>
           </WriterWrap>
         </Writers>
@@ -174,6 +176,11 @@ const WriterButton = styled.button`
   line-height: 1.125rem;
   margin: 0 0.125rem;
   padding: 0.438rem 1rem 0.375rem;
+  cursor: pointer;
+
+  :active {
+    color: #02c3bd;
+  }
 `;
 
 const WriterKeywordWrap = styled.div`
@@ -212,160 +219,27 @@ const WriterWrap = styled.div`
     }
   }
 `;
-
-const WriterProfile = styled.img`
-  width: 5rem;
-  height: 5rem;
-  border: 1px solid #efefef;
-  border-radius: 50%;
-`;
-
-const WritersName = styled.span`
-  font-size: 1.25rem;
-`;
-
-const WritersJob = styled.span`
-  font-size: 0.8rem;
-  color: #666;
-`;
-
-const WriterDesc = styled.p`
-  font-size: 0.8rem;
-  color: #666;
-  margin-top: 1rem;
-`;
-
 const Recommend = styled.div`
   ${theme => theme.theme.flex.flexBox()}
   flex-direction: column;
   width: 100%;
   height: 52.781rem;
 `;
-const WRITER_LIST = [
+
+const WRITER_CATEGORY = [
   {
     id: 1,
-    src: 'images/bread.png',
-    name: '김행갬',
-    job: '프론트엔드 개발자',
-    desc: '현재 카카오에서 프론트엔드 개발자로 일하고 있습니다.',
-    tag: [
-      {
-        id: 1,
-        name: '프론트엔드',
-      },
-      {
-        id: 2,
-        name: '웹 개발',
-      },
-      {
-        id: 3,
-        name: '...',
-      },
-    ],
+    value: '프론트엔드',
+    number: 73,
   },
   {
     id: 2,
-    src: 'images/bread.png',
-    name: '김행갬',
-    job: '프론트엔드 개발자',
-    desc: '현재 카카오에서 프론트엔드 개발자로 일하고 있습니다.',
-    tag: [
-      {
-        id: 1,
-        name: '프론트엔드',
-      },
-      {
-        id: 2,
-        name: '웹 개발',
-      },
-      {
-        id: 3,
-        name: '...',
-      },
-    ],
+    value: '백엔드',
+    number: 74,
   },
   {
     id: 3,
-    src: 'images/bread.png',
-    name: '김행갬',
-    job: '프론트엔드 개발자',
-    desc: '현재 카카오에서 프론트엔드 개발자로 일하고 있습니다.',
-    tag: [
-      {
-        id: 1,
-        name: '프론트엔드',
-      },
-      {
-        id: 2,
-        name: '웹 개발',
-      },
-      {
-        id: 3,
-        name: '...',
-      },
-    ],
-  },
-  {
-    id: 4,
-    src: 'images/bread.png',
-    name: '김행갬',
-    job: '프론트엔드 개발자',
-    desc: '현재 카카오에서 프론트엔드 개발자로 일하고 있습니다.',
-    tag: [
-      {
-        id: 1,
-        name: '프론트엔드',
-      },
-      {
-        id: 2,
-        name: '웹 개발',
-      },
-      {
-        id: 3,
-        name: '...',
-      },
-    ],
-  },
-  {
-    id: 5,
-    src: 'images/bread.png',
-    name: '김행갬',
-    job: '프론트엔드 개발자',
-    desc: '현재 카카오에서 프론트엔드 개발자로 일하고 있습니다.',
-    tag: [
-      {
-        id: 1,
-        name: '프론트엔드',
-      },
-      {
-        id: 2,
-        name: '웹 개발',
-      },
-      {
-        id: 3,
-        name: '...',
-      },
-    ],
-  },
-  {
-    id: 6,
-    src: 'images/bread.png',
-    name: '김행갬',
-    job: '프론트엔드 개발자',
-    desc: '현재 카카오에서 프론트엔드 개발자로 일하고 있습니다.',
-    tag: [
-      {
-        id: 1,
-        name: '프론트엔드',
-      },
-      {
-        id: 2,
-        name: '웹 개발',
-      },
-      {
-        id: 3,
-        name: '...',
-      },
-    ],
+    value: '알고리즘',
+    number: 75,
   },
 ];
