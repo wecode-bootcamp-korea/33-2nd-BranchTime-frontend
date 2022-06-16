@@ -5,7 +5,7 @@ import PostDetailMentTextarea from './PostDetailMentTextarea';
 
 const PostDetailComment = ({ data }) => {
   const [isCommentOpen, setIsCommentOpen] = useState(false);
-  const [file, setFile] = useState('');
+  const [file, setFile] = useState({});
   const [previewURL, setPreviewURL] = useState('');
   const [preview, setPreview] = useState(null);
   const [commentValue, setCommentValue] = useState('');
@@ -13,11 +13,13 @@ const PostDetailComment = ({ data }) => {
   const fileRef = useRef();
 
   useEffect(() => {
-    if (file !== '')
+    if (previewURL === '') {
+      return;
+    } else {
       setPreview(
         <img className="img_preview" src={previewURL} alt="임시이미지" />
       );
-    return () => {};
+    }
   }, [previewURL, file]);
 
   useEffect(() => {
@@ -26,41 +28,40 @@ const PostDetailComment = ({ data }) => {
       .then(data => setComment(data));
   }, []);
 
-  // TODO : 백엔드 통신 예정
-  // const onChangeImg = (e) => {
-  //   e.preventDefault();
-
-  //   if(e.target.files){
-  //     const uploadFile = e.target.files[0]
-  //     const formData = new FormData()
-  //     formData.append('files',uploadFile)
-
-  // axios({
-  //   method: 'post',
-  //   url: '/api/files/images',
-  //   data: formData,
-  //   headers: {
-  //     'Content-Type': 'multipart/form-data',
-  //   },
-  // });
-  //   }
-  // }
-
   const handleFileOnChange = e => {
     e.preventDefault();
 
-    const file = e.target.files[0];
+    const token =
+      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6Mn0.lQ0EbuckiDJz6Ep5ZCQQ4dEp7q09ePyuW2tm4ijSo4Y';
+
+    const files = e.target.files[0];
     const reader = new FileReader();
 
     const formData = new FormData();
-    formData.append('files', setFile);
+
+    formData.append('comment_image', files);
+    formData.append('content', commentValue);
 
     reader.onloadend = () => {
-      setFile(file);
+      setFile(files);
       setPreviewURL(reader.result);
     };
 
-    if (file) reader.readAsDataURL(file);
+    fetch('http:///10.58.1.170:8001/contents/53/comment', {
+      method: 'POST',
+      headers: {
+        Authorization: token,
+      },
+      body: formData,
+    }).then(res => {
+      if (res.ok) {
+        // console.log('성공!');
+      } else {
+        alert('잘못된 요청입니다');
+      }
+    });
+
+    if (files) reader.readAsDataURL(files);
   };
 
   const handleFileButtonClick = e => {
@@ -95,8 +96,21 @@ const PostDetailComment = ({ data }) => {
     commentId.current += 1;
   };
 
-  const onRemove = id => {
-    setComment(comment.filter(ment => ment.id !== id));
+  const onRemove = comment_id => {
+    // e.preventDefault();
+    const token =
+      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6Mn0.lQ0EbuckiDJz6Ep5ZCQQ4dEp7q09ePyuW2tm4ijSo4Y';
+
+    fetch(`http://10.58.1.170:8001/contents/comment/${comment_id}`, {
+      headers: {
+        Authorization: token,
+      },
+      method: 'DELETE',
+    }).then(res => {
+      if (res.ok) {
+        setFile('');
+      }
+    });
   };
 
   return (
@@ -114,48 +128,35 @@ const PostDetailComment = ({ data }) => {
             댓글 <CommentSpan>{data.length}</CommentSpan>
           </Label>
           <Hr />
+          <form>
+            {data.map(
+              ({ comment_id, comment_image, user_name, comment_content }) => (
+                <CommentList key={comment_id}>
+                  {comment_image && (
+                    <PreviewImg>
+                      <img src={comment_image} alt="임시사진" />
+                    </PreviewImg>
+                  )}
+                  <CommentWrap isImage={comment_image !== ''}>
+                    <UserName>{user_name}</UserName>
+                    <CommentValue>{comment_content}</CommentValue>
+                  </CommentWrap>
 
-          {data.map(({ id, comment_image, user_name, comment_content }) => (
-            <CommentList key={id}>
-              {comment_image && (
-                <PreviewImg>
-                  <img src={comment_image} alt="임시사진" />
-                </PreviewImg>
-              )}
-              <CommentWrap isImage={comment_image !== ''}>
-                <UserName>{user_name}</UserName>
-                <CommentValue>{comment_content}</CommentValue>
-              </CommentWrap>
+                  <Delete onClick={() => onRemove(comment_id)}>삭제</Delete>
+                </CommentList>
+              )
+            )}
 
-              <Delete onClick={() => onRemove(id)}>삭제</Delete>
-            </CommentList>
-          ))}
-
-          {/* {comment.map(({ id, userName, text, imgSrc }) => (
-            <CommentList key={id}>
-              {imgSrc && (
-                <PreviewImg>
-                  <img src={previewURL} alt="임시사진" />
-                </PreviewImg>
-              )}
-              <CommentWrap isImage={imgSrc !== ''}>
-                <UserName>{userName}</UserName>
-                <CommentValue>{text}</CommentValue>
-              </CommentWrap>
-
-              <Delete onClick={() => onRemove(id)}>삭제</Delete>
-            </CommentList>
-          ))} */}
-
-          <PostDetailMentTextarea
-            commentValue={commentValue}
-            userCommentChange={userCommentChange}
-            preview={preview}
-            fileRef={fileRef}
-            handleFileOnChange={handleFileOnChange}
-            handleFileButtonClick={handleFileButtonClick}
-            commentSubmit={commentSubmit}
-          />
+            <PostDetailMentTextarea
+              commentValue={commentValue}
+              userCommentChange={userCommentChange}
+              preview={preview}
+              fileRef={fileRef}
+              handleFileOnChange={handleFileOnChange}
+              handleFileButtonClick={handleFileButtonClick}
+              commentSubmit={commentSubmit}
+            />
+          </form>
         </section>
       )}
     </PostDetailCommentWrapper>

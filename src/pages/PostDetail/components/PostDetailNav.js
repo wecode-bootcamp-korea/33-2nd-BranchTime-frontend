@@ -12,8 +12,8 @@ const PostDetailNav = ({ data }) => {
   };
   return (
     <div>
-      {data.map(({ id, post_subcategory_name, post_like_count }) => (
-        <CoverNav key={id}>
+      {data.map(({ post_id, post_subcategory_name, post_like_count }) => (
+        <CoverNav key={post_id}>
           <div>NavComponent</div>
           <Button>{post_subcategory_name}</Button>
           <Ul>

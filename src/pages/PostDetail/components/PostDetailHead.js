@@ -12,14 +12,14 @@ const PostDetailHead = ({ data }) => {
 
       {data.map(
         ({
-          id,
+          post_id,
           post_title,
           post_subtitle,
           post_user_name,
           post_created_at,
           post_thumbnail_image,
         }) => (
-          <Cover key={id}>
+          <Cover key={post_id}>
             <CoverImg image={post_thumbnail_image}>
               <Titlewarp>
                 <CoverTitleWarp>

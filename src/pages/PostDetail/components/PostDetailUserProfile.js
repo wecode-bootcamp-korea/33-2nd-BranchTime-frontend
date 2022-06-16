@@ -6,13 +6,13 @@ const PostDetailUserProfile = ({ data }) => {
     <UserProfileWarpper>
       {data.map(
         ({
-          id,
+          post_id,
           post_user_name,
           post_subtitle,
           user_introduction,
           user_subscription_count,
         }) => (
-          <Container key={id}>
+          <Container key={post_id}>
             <Title>{post_user_name}</Title>
             <Desc>{post_subtitle}</Desc>
             <UserIntroduce>{user_introduction}</UserIntroduce>

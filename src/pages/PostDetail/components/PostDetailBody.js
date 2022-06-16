@@ -4,8 +4,8 @@ import styled from 'styled-components';
 const PostDetailBody = ({ data }) => {
   return (
     <>
-      {data.map(({ id, post_content }) => (
-        <PostDetailBodyWarpper key={id}>
+      {data.map(({ post_id, post_content }) => (
+        <PostDetailBodyWarpper key={post_id}>
           <p>{post_content}</p>
 
           {/* <H1>🍋Custom Hook</H1>

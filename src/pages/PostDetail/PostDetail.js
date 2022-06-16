@@ -10,7 +10,7 @@ const PostDetail = () => {
   const [comment, setComment] = useState({});
 
   useEffect(() => {
-    fetch('http://10.58.6.154:8000/contents/53')
+    fetch('http:///10.58.1.170:8001/contents/53')
       .then(res => res.json())
       .then(data => {
         setData(data.message);
@@ -21,8 +21,6 @@ const PostDetail = () => {
   const isDataEmpty = Object.keys(data).length === 0;
 
   if (isDataEmpty) return <>loading...</>;
-
-  // const {comment_information, post_content, }
 
   return (
     <>
