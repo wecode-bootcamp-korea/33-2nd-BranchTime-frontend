@@ -23,14 +23,14 @@ function Router() {
         <Route path="/" element={<Main />} />
         <Route path="/login" element={<Login />} />
         <Route path="/post_list/:id" element={<PostList />} />
-        <Route path="/post_detail" element={<PostDetail />} />
+        <Route path="/post_detail/:id" element={<PostDetail />} />
         <Route path="/write" element={<Write />} />
         <Route path="/oauth/callback/kakao" element={<KakaoRedirect />} />
         <Route path="/oauth/callback/github" element={<GithubRedirect />} />
         <Route path="/oauth/callback/naver" element={<NaverRedirect />} />
         <Route path="/login" element={<Login />} />
         <Route path="/myPage" element={<MyPage />} />
-        <Route path="/userPage" element={<UserPage />} />
+        <Route path="/userPage/:id" element={<UserPage />} />
         <Route path="/myPageProfileEdit" element={<MyPageProfileEdit />} />
         <Route path="/bookAnimation" element={<BookAnimation />} />
         <Route path="/write" element={<Write />} />
