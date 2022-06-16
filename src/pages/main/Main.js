@@ -1,42 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import Footer from './footer/Footer';
-import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { GrLinkPrevious, GrLinkNext } from 'react-icons/gr';
 import { GiTreeBranch } from 'react-icons/gi';
+import TopCarousel from './TopCarousel';
+import RecommendCarousel from './RecommendCarousel';
 
 import Keyword from './keyword/Keyword';
 
 const Main = () => {
-  const settings = {
-    dots: true,
-    className: 'center',
-    centerMode: true,
-    infinite: true,
-    centerPadding: '60px',
-    slidesToShow: 3,
-    speed: 500,
-    rows: 2,
-    slidesPerRow: 2,
-    prevArrow: <GrLinkPrevious />,
-    nextArrow: <GrLinkNext />,
-    variableWidth: true,
-  };
-
-  const recommendSettings = {
-    infinite: true,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScoll: 5,
-    centerMode: true,
-    dots: true,
-    centerPadding: '60px',
-    className: 'center',
-    prevArrow: <GrLinkPrevious />,
-    nextArrow: <GrLinkNext />,
-  };
   return (
     <>
       <MainWrapper>
@@ -56,16 +29,7 @@ const Main = () => {
           </IntroP>
         </IntroBrunch>
         <EditorPic>
-          <StyledSlider {...settings}>
-            {MAIN_SLIDER.map(slide => {
-              const { id, name, width } = slide;
-              return (
-                <div style={{ width: { width } }} key={id}>
-                  <h3>{name}</h3>
-                </div>
-              );
-            })}
-          </StyledSlider>
+          <TopCarousel />
         </EditorPic>
         <Keywords>
           <KeywordH>BRANCH KEYWORD</KeywordH>
@@ -107,20 +71,7 @@ const Main = () => {
         <Recommend>
           <KeywordH>RECOMMENDED ARTICLES</KeywordH>
           <KeywordSpan>브랜치타임의 다양한 글을 만나보세요.</KeywordSpan>
-
-          <RecommendSlider {...recommendSettings}>
-            {RECOMMEND_LIST.map(list => {
-              const { id, src, title, body, author } = list;
-              return (
-                <div key={id}>
-                  <img src={src} alt="recommend" />
-                  <strong>{title}</strong>
-                  <p>{body}</p>
-                  <span>by {author}</span>
-                </div>
-              );
-            })}
-          </RecommendSlider>
+          <RecommendCarousel />
         </Recommend>
       </MainWrapper>
       <Footer />
@@ -179,50 +130,6 @@ const EditorPic = styled.div`
   margin-top: 1.375rem;
   margin-left: 20rem;
   height: 35.813rem;
-`;
-
-const StyledSlider = styled(Slider)`
-  border: 1px solid black;
-  width: 80rem;
-  height: 30rem;
-
-  h3 {
-    height: 15rem;
-    border: 1px solid black;
-  }
-
-  p {
-    width: 15rem;
-    padding-top: 0.625rem;
-  }
-`;
-
-const RecommendSlider = styled(Slider)`
-  width: 80rem;
-  margin-top: 1.375rem;
-
-  div {
-    height: 36.031rem;
-  }
-  img {
-    width: 15rem;
-    height: 15rem;
-  }
-  strong {
-    font-weight: bold;
-  }
-  p {
-    width: 15rem;
-    color: #959595;
-    font-size: 12px;
-    padding-top: 10px;
-  }
-  span {
-    color: #bfbfbf;
-    font-size: 12px;
-    padding-top: 22px;
-    margin-top: 3px;
-  }
 `;
 
 const Keywords = styled.div`
@@ -460,147 +367,5 @@ const WRITER_LIST = [
         name: '...',
       },
     ],
-  },
-];
-
-const MAIN_SLIDER = [
-  {
-    id: 1,
-    name: 1,
-    width: 30,
-  },
-  {
-    id: 2,
-    name: 2,
-    width: 200,
-  },
-  {
-    id: 3,
-    name: 3,
-  },
-  {
-    id: 4,
-    name: 4,
-  },
-  {
-    id: 5,
-    name: 5,
-  },
-  {
-    id: 6,
-    name: 6,
-  },
-  {
-    id: 7,
-    name: 7,
-  },
-  {
-    id: 8,
-    name: 8,
-  },
-  {
-    id: 9,
-    name: 9,
-  },
-  {
-    id: 10,
-    name: 10,
-  },
-  {
-    id: 11,
-    name: 11,
-  },
-  {
-    id: 12,
-    name: 12,
-  },
-  {
-    id: 13,
-    name: 13,
-  },
-  {
-    id: 14,
-    name: 14,
-  },
-  {
-    id: 15,
-    name: 15,
-  },
-  {
-    id: 16,
-    name: 16,
-  },
-];
-
-const RECOMMEND_LIST = [
-  {
-    id: 1,
-    src: 'images/bread.png',
-    title: 'Title',
-    body: '감사원은 원장을 포함한 5인 이상 11인 이하의 감사위원으로 구성한다. 국무총리·국무위원 또는 정부위원은 국회나 그 위원회에 출석하여 국정처리상황을 보고하거나 의견을 진술하고 질문에 응답할 수 있다. 국가는 재해를 예방하고 그 위험으로부터 국민을 보호하기 위하여 노력하여야 한다. 원장은 국회의 동의를 얻어 대통령이 임명하고, 그 임기는 4년으로 하며, 1차에 한하여 중임할 수 있다.',
-    author: '행갬',
-  },
-  {
-    id: 2,
-    src: 'images/bread.png',
-    title: 'Title',
-    body: '감사원은 원장을 포함한 5인 이상 11인 이하의 감사위원으로 구성한다. 국무총리·국무위원 또는 정부위원은 국회나 그 위원회에 출석하여 국정처리상황을 보고하거나 의견을 진술하고 질문에 응답할 수 있다. 국가는 재해를 예방하고 그 위험으로부터 국민을 보호하기 위하여 노력하여야 한다. 원장은 국회의 동의를 얻어 대통령이 임명하고, 그 임기는 4년으로 하며, 1차에 한하여 중임할 수 있다.',
-    author: '행갬',
-  },
-  {
-    id: 3,
-    src: 'images/bread.png',
-    title: 'Title',
-    body: '감사원은 원장을 포함한 5인 이상 11인 이하의 감사위원으로 구성한다. 국무총리·국무위원 또는 정부위원은 국회나 그 위원회에 출석하여 국정처리상황을 보고하거나 의견을 진술하고 질문에 응답할 수 있다. 국가는 재해를 예방하고 그 위험으로부터 국민을 보호하기 위하여 노력하여야 한다. 원장은 국회의 동의를 얻어 대통령이 임명하고, 그 임기는 4년으로 하며, 1차에 한하여 중임할 수 있다.',
-    author: '행갬',
-  },
-  {
-    id: 4,
-    src: 'images/bread.png',
-    title: 'Title',
-    body: '감사원은 원장을 포함한 5인 이상 11인 이하의 감사위원으로 구성한다. 국무총리·국무위원 또는 정부위원은 국회나 그 위원회에 출석하여 국정처리상황을 보고하거나 의견을 진술하고 질문에 응답할 수 있다. 국가는 재해를 예방하고 그 위험으로부터 국민을 보호하기 위하여 노력하여야 한다. 원장은 국회의 동의를 얻어 대통령이 임명하고, 그 임기는 4년으로 하며, 1차에 한하여 중임할 수 있다.',
-    author: '행갬',
-  },
-  {
-    id: 5,
-    src: 'images/bread.png',
-    title: 'Title',
-    body: '감사원은 원장을 포함한 5인 이상 11인 이하의 감사위원으로 구성한다. 국무총리·국무위원 또는 정부위원은 국회나 그 위원회에 출석하여 국정처리상황을 보고하거나 의견을 진술하고 질문에 응답할 수 있다. 국가는 재해를 예방하고 그 위험으로부터 국민을 보호하기 위하여 노력하여야 한다. 원장은 국회의 동의를 얻어 대통령이 임명하고, 그 임기는 4년으로 하며, 1차에 한하여 중임할 수 있다.',
-    author: '행갬',
-  },
-  {
-    id: 6,
-    src: 'images/bread.png',
-    title: 'Title',
-    body: '감사원은 원장을 포함한 5인 이상 11인 이하의 감사위원으로 구성한다. 국무총리·국무위원 또는 정부위원은 국회나 그 위원회에 출석하여 국정처리상황을 보고하거나 의견을 진술하고 질문에 응답할 수 있다. 국가는 재해를 예방하고 그 위험으로부터 국민을 보호하기 위하여 노력하여야 한다. 원장은 국회의 동의를 얻어 대통령이 임명하고, 그 임기는 4년으로 하며, 1차에 한하여 중임할 수 있다.',
-    author: '행갬',
-  },
-  {
-    id: 7,
-    src: 'images/bread.png',
-    title: 'Title',
-    body: '감사원은 원장을 포함한 5인 이상 11인 이하의 감사위원으로 구성한다. 국무총리·국무위원 또는 정부위원은 국회나 그 위원회에 출석하여 국정처리상황을 보고하거나 의견을 진술하고 질문에 응답할 수 있다. 국가는 재해를 예방하고 그 위험으로부터 국민을 보호하기 위하여 노력하여야 한다. 원장은 국회의 동의를 얻어 대통령이 임명하고, 그 임기는 4년으로 하며, 1차에 한하여 중임할 수 있다.',
-    author: '행갬',
-  },
-  {
-    id: 8,
-    src: 'images/bread.png',
-    title: 'Title',
-    body: '감사원은 원장을 포함한 5인 이상 11인 이하의 감사위원으로 구성한다. 국무총리·국무위원 또는 정부위원은 국회나 그 위원회에 출석하여 국정처리상황을 보고하거나 의견을 진술하고 질문에 응답할 수 있다. 국가는 재해를 예방하고 그 위험으로부터 국민을 보호하기 위하여 노력하여야 한다. 원장은 국회의 동의를 얻어 대통령이 임명하고, 그 임기는 4년으로 하며, 1차에 한하여 중임할 수 있다.',
-    author: '행갬',
-  },
-  {
-    id: 9,
-    src: 'images/bread.png',
-    title: 'Title',
-    body: '감사원은 원장을 포함한 5인 이상 11인 이하의 감사위원으로 구성한다. 국무총리·국무위원 또는 정부위원은 국회나 그 위원회에 출석하여 국정처리상황을 보고하거나 의견을 진술하고 질문에 응답할 수 있다. 국가는 재해를 예방하고 그 위험으로부터 국민을 보호하기 위하여 노력하여야 한다. 원장은 국회의 동의를 얻어 대통령이 임명하고, 그 임기는 4년으로 하며, 1차에 한하여 중임할 수 있다.',
-    author: '행갬',
-  },
-  {
-    id: 10,
-    src: 'images/bread.png',
-    title: 'Title',
-    body: '감사원은 원장을 포함한 5인 이상 11인 이하의 감사위원으로 구성한다. 국무총리·국무위원 또는 정부위원은 국회나 그 위원회에 출석하여 국정처리상황을 보고하거나 의견을 진술하고 질문에 응답할 수 있다. 국가는 재해를 예방하고 그 위험으로부터 국민을 보호하기 위하여 노력하여야 한다. 원장은 국회의 동의를 얻어 대통령이 임명하고, 그 임기는 4년으로 하며, 1차에 한하여 중임할 수 있다.',
-    author: '행갬',
   },
 ];

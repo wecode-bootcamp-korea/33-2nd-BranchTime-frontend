@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import MyPageContent from '../../components/MyPage/MyPageContent';
 import UserInfo from '../../components/MyPage/UserInfo';
+import MyPageContent from '../../components/MyPage/MyPageContent';
 import { BASE_URL } from '../../config';
 
-const MyPage = () => {
+const UserPage = () => {
   const [contentList, setContentList] = useState([]);
+
+  const [authorList, setAuthorList] = useState([]);
+  useEffect(() => {
+    fetch(`${BASE_URL}authors/detail/2`, {})
+      .then(res => res.json())
+      .then(authorList => setAuthorList(authorList.author_detail));
+  }, []);
 
   useEffect(() => {
     fetch('/data/contentData.json')
@@ -13,21 +20,9 @@ const MyPage = () => {
       .then(contentData => setContentList(contentData));
   }, []);
 
-  const [userList, setUserList] = useState({});
-
-  useEffect(() => {
-    fetch(`${BASE_URL}users/mypage`, {
-      headers: {
-        Authorization: localStorage.getItem('Authorization'),
-      },
-    })
-      .then(res => res.json())
-      .then(userList => setUserList(userList.user_detail));
-  }, []);
-
   return (
-    <MyPageContainer className="myPage">
-      <UserInfo userList={userList} isMyPage={true} />
+    <MyPageContainer>
+      <UserInfo userList={authorList} isMyPage={false} />
       <BtnContainer>
         {btnMap.map(item => (
           <Btn key={item.id} data={item}>
@@ -62,7 +57,7 @@ const Btn = styled.button`
   background-color: transparent;
   border: none;
   border-top: 1px solid lightgray;
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   cursor: pointer;
   padding: 1.5rem 0;
 
@@ -70,19 +65,20 @@ const Btn = styled.button`
     border-top: 1px solid black;
   }
 `;
-export default MyPage;
 
 const btnMap = [
   {
     id: 0,
-    title: '최근 읽은 글',
+    title: '작가 소개',
   },
   {
     id: 1,
-    title: '좋아요',
+    title: '글',
   },
   {
     id: 2,
-    title: '내가 쓴 글',
+    title: '작품',
   },
 ];
+
+export default UserPage;
