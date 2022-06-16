@@ -1,4 +1,5 @@
 import { GiTreeBranch } from 'react-icons/gi';
+import { useNavigate } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import Login from '../../pages/Login/Login';
 
@@ -16,10 +17,12 @@ const SideDrawer = ({
   closeDrawer,
   setNavDrawer,
 }) => {
+  const navigate = useNavigate();
   const logOut = () => {
     // localStorage.removeItem('token');
     setIsActive(false);
     setNavDrawer(false);
+    navigate('/');
   };
 
   return (
