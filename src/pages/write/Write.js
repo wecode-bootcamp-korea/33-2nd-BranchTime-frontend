@@ -6,6 +6,7 @@ import { AiOutlineArrowRight, AiOutlineArrowLeft } from 'react-icons/ai';
 import React, { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import WriteCategory from './WriteCategory';
+import { useNavigate } from 'react-router-dom';
 
 const Write = () => {
   const [value, setValue] = React.useState(
@@ -80,6 +81,8 @@ const Write = () => {
     setSubTitle(e.target.value);
   };
 
+  const navigate = useNavigate();
+
   const postWrite = () => {
     const formData = new FormData();
     formData.append('thumbnail_image', file);
@@ -89,17 +92,24 @@ const Write = () => {
     formData.append('title', mainTitle);
     formData.append('color_code', COLOR_SET[calculateColor]);
 
-    fetch('http://10.58.1.170:8001/contents/', {
+    fetch('http://10.58.2.42:8000/contents/', {
       method: 'POST',
       headers: {
         Authorization: localStorage.getItem('token'),
       },
       body: formData,
-    }).then(response => response.json());
+    })
+      .then(response => response.json())
+      .then(result => {
+        if (result.message === 'SUCCESS') {
+          navigate('/');
+        }
+      });
   };
 
   return (
     <>
+      <NavBtn onClick={postWrite}>저장</NavBtn>
       <EditorHeader
         headerColorMode={headerColorMode}
         setColor={COLOR_SET[calculateColor]}
@@ -108,6 +118,7 @@ const Write = () => {
       >
         <HeaderWrapper>
           <WriteCategory
+            subCategory={subCategory}
             mainCategoryId={mainCategoryId}
             setMainCategoryId={setMainCategoryId}
             setSubCategory={setSubCategory}
@@ -123,8 +134,6 @@ const Write = () => {
             />
           </InputTitle>
           <EditHeaderBtn>
-            {/* To Do : 백엔드 통신 테스트 버튼입니다. */}
-            <button onClick={postWrite}>Test</button>
             <form>
               <label>
                 <BiImages />
@@ -176,6 +185,19 @@ const Write = () => {
 };
 
 export default Write;
+
+const NavBtn = styled.button`
+  position: absolute;
+  border-radius: 20rem;
+  background-color: white;
+  border: 1px solid #999;
+  color: #999;
+  top: 2%;
+  right: 3%;
+  width: 3.8%;
+  height: 3.2%;
+  /* opacity: 0; */
+`;
 
 const MDEditorWrapper = styled.div`
   margin: 0 24% 5% 24%;
