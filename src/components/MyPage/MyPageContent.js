@@ -40,11 +40,11 @@ const ContentContainer = styled.div`
 `;
 
 const ContentSubject = styled.div`
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 `;
 
 const ContentPreview = styled.div`
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: gray;
   text-overflow: ellipsis;
 `;

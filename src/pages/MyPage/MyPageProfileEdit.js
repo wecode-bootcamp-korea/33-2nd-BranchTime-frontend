@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../../config';
 
 const MyPageProfileEdit = () => {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ const MyPageProfileEdit = () => {
   };
 
   useEffect(() => {
-    fetch('http://10.58.6.151:8000/users/mypage', {
+    fetch(`${BASE_URL}users/mypage`, {
       headers: {
         Authorization: localStorage.getItem('Authorization'),
       },
@@ -62,18 +63,13 @@ const MyPageProfileEdit = () => {
     });
   };
 
-  // toDo: const fileChange = e => {
-  //   const file = e.target.files;
-  //   setPostItems({ avatar: file });
-  // };
-
   const formDataPost = e => {
     e.preventDefault();
     const formData = new FormData();
     formData.append('image', imageFile);
     formData.append('name', postItmes.authorName);
     formData.append('description', postItmes.authorDescription);
-    fetch(`http://10.58.6.151:8000/users/profileupdate`, {
+    fetch(`${BASE_URL}users/profileupdate`, {
       method: 'POST',
       headers: {
         Authorization: localStorage.getItem('Authorization'),

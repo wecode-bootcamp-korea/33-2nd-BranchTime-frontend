@@ -2,12 +2,18 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { IoEllipsisVerticalSharp } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
+import Toggle from '../../components/MyPage/Toggle';
 
-const UserInfo = () => {
+const UserInfo = ({ userList, isMyPage }) => {
+  const { name, avatar, description, interestedAuthor, subscriber } = userList;
   const navigate = useNavigate();
 
   const goToProfileEdit = () => {
     navigate('/MyPageProfileEdit');
+  };
+
+  const goToWrite = () => {
+    navigate('/Write');
   };
 
   const [click, setClick] = useState(false);
@@ -16,33 +22,16 @@ const UserInfo = () => {
     setClick(prev => !prev);
   };
 
-  const [userList, setUserList] = useState([]);
-  useEffect(() => {
-    fetch('http://10.58.6.151:8000/users/mypage', {
-      headers: {
-        Authorization: localStorage.getItem('Authorization'),
-      },
-    })
-      .then(res => res.json())
-      .then(userList => setUserList(userList));
-  }, []);
-
   return (
     <UserInfoContainer>
       <UserContainer>
         <HeaderLeft>
-          {userList.user_detail && <Author>{userList.user_detail.name}</Author>}
-          {userList.user_detail && (
-            <AuthorDescription>
-              {userList.user_detail.description}
-            </AuthorDescription>
-          )}
+          {userList && <Author>{name}</Author>}
+          {userList && <AuthorDescription>{description}</AuthorDescription>}
         </HeaderLeft>
         <HeaderRight>
           <UserAvatar>
-            {userList.user_detail && (
-              <AvatarProfile src={userList.user_detail.avatar} alt="profile" />
-            )}
+            {userList && <AvatarProfile src={avatar} alt="profile" />}
           </UserAvatar>
         </HeaderRight>
       </UserContainer>
@@ -50,24 +39,30 @@ const UserInfo = () => {
         <Interested>
           <Subscriber>
             <SubsMargin>구독자</SubsMargin>
-            {userList.user_detail && (
-              <SubsData>{userList.user_detail.subscriber}</SubsData>
-            )}
+            {userList && <SubsData>{subscriber}</SubsData>}
           </Subscriber>
           <div className="interestedWriter">
             <SubsMargin>관심작가</SubsMargin>
-            {userList.user_detail && (
-              <SubsData>{userList.user_detail.interestedAuthor}</SubsData>
-            )}
+            {userList && <SubsData>{interestedAuthor}</SubsData>}
           </div>
         </Interested>
         <SubscribeBtn>
-          <div>
-            <Suggestion>제안하기</Suggestion>
-          </div>
-          <div className="subscription">
-            <Subscription>구독하기</Subscription>
-          </div>
+          {isMyPage && (
+            <div>
+              <Write onClick={goToWrite}>글쓰기</Write>
+            </div>
+          )}
+          {!isMyPage && (
+            <>
+              <div>
+                <Suggestion>제안하기</Suggestion>
+              </div>
+              <div className="subscription">
+                <Subscription>구독하기</Subscription>
+              </div>
+            </>
+          )}
+
           <EllipsisMenu onClick={handleClick}>
             <IoEllipsisVerticalSharp />
           </EllipsisMenu>
@@ -75,13 +70,16 @@ const UserInfo = () => {
       </Subscribe>
 
       <article>
-        <ProfileEdit>
-          {click && (
-            <InvisibleMenu>
-              <Edit onClick={goToProfileEdit}>프로필 편집</Edit>
-            </InvisibleMenu>
-          )}
-        </ProfileEdit>
+        {isMyPage && (
+          <ProfileEdit>
+            {click && (
+              <InvisibleMenu>
+                <Edit onClick={goToProfileEdit}>프로필 편집</Edit>
+              </InvisibleMenu>
+            )}
+          </ProfileEdit>
+        )}
+        {!isMyPage && <Toggle click={click} />}
       </article>
     </UserInfoContainer>
   );
@@ -182,6 +180,17 @@ const Subscription = styled.button`
   border-radius: 1.3rem;
   cursor: pointer;
 `;
+
+const Write = styled.button`
+  color: #52d7d2;
+  background-color: transparent;
+  padding: 0.3rem 1rem;
+  font-size: 1.3rem;
+  border: 1px solid #52d7d2;
+  border-radius: 1.3rem;
+  cursor: pointer;
+`;
+
 const EllipsisMenu = styled.div`
   color: lightgray;
   cursor: pointer;
