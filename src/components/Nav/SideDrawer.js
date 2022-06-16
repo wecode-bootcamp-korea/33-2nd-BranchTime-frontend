@@ -14,10 +14,12 @@ const SideDrawer = ({
   quitLogin,
   navDrawer,
   closeDrawer,
+  setNavDrawer,
 }) => {
   const logOut = () => {
     // localStorage.removeItem('token');
     setIsActive(false);
+    setNavDrawer(false);
   };
 
   return (
