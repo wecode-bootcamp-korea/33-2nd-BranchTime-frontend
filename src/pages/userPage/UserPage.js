@@ -3,13 +3,15 @@ import styled from 'styled-components';
 import UserInfo from '../../components/MyPage/UserInfo';
 import MyPageContent from '../../components/MyPage/MyPageContent';
 import { BASE_URL } from '../../config';
+import { useParams } from 'react-router-dom';
 
 const UserPage = () => {
+  const params = useParams();
   const [contentList, setContentList] = useState([]);
-
   const [authorList, setAuthorList] = useState([]);
+
   useEffect(() => {
-    fetch(`${BASE_URL}authors/detail/2`, {})
+    fetch(`${BASE_URL}authors/detail/${params.id}`)
       .then(res => res.json())
       .then(authorList => setAuthorList(authorList.author_detail));
   }, []);

@@ -14,7 +14,7 @@ const GithubRedirect = () => {
       .then(res => res.json())
       .then(data => {
         localStorage.setItem('token', data.token);
-        navigate('/main');
+        navigate('/');
       });
   };
 

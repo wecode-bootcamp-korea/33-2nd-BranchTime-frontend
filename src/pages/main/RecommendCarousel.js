@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { GrLinkPrevious, GrLinkNext } from 'react-icons/gr';
 import Slider from 'react-slick';
 import styled from 'styled-components';
 import arrayShuffle from 'array-shuffle';
 
 const RecommendCarousel = () => {
+  const [recommend, setRecommend] = useState([]);
+
+  useEffect(() => {
+    fetch(`http://10.58.2.42:8000/contents/postlist/search`)
+      .then(res => res.json())
+      .then(data => setRecommend(data.list));
+  }, []);
+
   const recommendSettings = {
     infinite: true,
     speed: 500,
@@ -19,14 +27,15 @@ const RecommendCarousel = () => {
   };
   return (
     <RecommendSlider {...recommendSettings}>
-      {arrayShuffle(RECOMMEND_LIST).map(list => {
-        const { id, src, title, body, author } = list;
+      {arrayShuffle(recommend).map(list => {
+        const { post_id, post_Thumbnail, post_title, post_content, writeUser } =
+          list;
         return (
-          <RecommendDiv key={id}>
-            <RecommendImg src={src} alt="recommend" />
-            <RecommendTitle>{title}</RecommendTitle>
-            <RecommendBody>{body}</RecommendBody>
-            <RecommendAuthor>by {author}</RecommendAuthor>
+          <RecommendDiv key={post_id}>
+            <RecommendImg src={post_Thumbnail} alt="recommend" />
+            <RecommendTitle>{post_title}</RecommendTitle>
+            <RecommendBody>{post_content}</RecommendBody>
+            <RecommendAuthor>by {writeUser}</RecommendAuthor>
           </RecommendDiv>
         );
       })}

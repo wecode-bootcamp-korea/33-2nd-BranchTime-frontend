@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { HiOutlineSearch } from 'react-icons/hi';
+import { useNavigate } from 'react-router-dom';
 
-const Search = () => {
+const Search = ({ openSearch }) => {
+  const navigate = useNavigate();
   const [value, setValue] = useState('');
+  const [searchData, setSearchData] = useState([]);
   const [iconActive, setIconActive] = useState(false);
 
   const isIconActive = () => {
@@ -13,6 +16,20 @@ const Search = () => {
   const hideIconActive = () => {
     setIconActive(false);
   };
+
+  const goToDetail = id => {
+    navigate(`/post_detail/${id}`);
+  };
+
+  const goToProfile = id => {
+    navigate(`/userPage/${id}`);
+  };
+
+  useEffect(() => {
+    fetch(`http://10.58.2.42:8000/contents/postlist/search`)
+      .then(res => res.json())
+      .then(data => setSearchData(data.list));
+  }, []);
 
   return (
     <SearchWrapper>
@@ -32,33 +49,55 @@ const Search = () => {
         <ResultLeft>
           <ResultTitle>글 검색 </ResultTitle>
           <div>
-            {POST_LIST.filter(list => {
-              return (
-                list.title.toLowerCase().includes(value.toLowerCase()) && list
-              );
-            }).map(list => {
-              return (
-                <PostWrapper key={list.id}>
-                  <PostTitle href="#!">{list.title}</PostTitle>
-                </PostWrapper>
-              );
-            })}
+            {searchData
+              .filter(list => {
+                return (
+                  list.post_title.toLowerCase().includes(value.toLowerCase()) &&
+                  list
+                );
+              })
+              .slice(0, 10)
+              .map(list => {
+                return (
+                  <PostWrapper key={list.post_id}>
+                    <PostTitle
+                      onClick={() => {
+                        goToDetail(list.post_id);
+                        openSearch();
+                      }}
+                    >
+                      {list.post_title}
+                    </PostTitle>
+                  </PostWrapper>
+                );
+              })}
           </div>
         </ResultLeft>
         <ResultRight>
           <ResultTitle>작가 검색</ResultTitle>
-          {POST_LIST.filter(list => {
-            return (
-              list.author.toLowerCase().includes(value.toLowerCase()) && list
-            );
-          }).map(list => {
-            return (
-              <WriterWrapper key={list.id}>
-                <WriterImg src={list.src} />
-                <WriterTitle href="#!">{list.author}</WriterTitle>
-              </WriterWrapper>
-            );
-          })}
+          {searchData
+            .filter(list => {
+              return (
+                list.writeUser.toLowerCase().includes(value.toLowerCase()) &&
+                list
+              );
+            })
+            .slice(0, 10)
+            .map(list => {
+              return (
+                <WriterWrapper key={list.write_id}>
+                  <WriterImg src={list.writeThumbnail} />
+                  <WriterTitle
+                    onClick={() => {
+                      goToProfile(list.write_id);
+                      openSearch();
+                    }}
+                  >
+                    {list.writeUser}
+                  </WriterTitle>
+                </WriterWrapper>
+              );
+            })}
         </ResultRight>
       </SearchResult>
     </SearchWrapper>
@@ -71,6 +110,11 @@ const SearchWrapper = styled.div`
   ${theme => theme.theme.flex.flexBox()}
   flex-direction: column;
   height: 100vh;
+  position: fixed;
+  width: 100%;
+  top: 5rem;
+  background-color: white;
+  z-index: 10000;
 `;
 
 const InputWrapper = styled.div`
@@ -135,7 +179,7 @@ const PostWrapper = styled.div`
 
 const PostTitle = styled.a`
   font-size: 1.25rem;
-  color: #ebebeb;
+  color: gray;
 
   &:hover {
     text-decoration: underline;
@@ -175,48 +219,3 @@ const WriterImg = styled.img`
   height: 1.875rem;
   border: 1px solid black;
 `;
-
-const POST_LIST = [
-  {
-    id: 1,
-    title: '가지볶음 만드는 법',
-    author: '김행갬',
-    src: 'images/bread.png',
-  },
-  {
-    id: 2,
-    title: '나비야 나비야 이리 날아오너라',
-    author: '박주영',
-    src: 'images/bread.png',
-  },
-  {
-    id: 3,
-    title: '다림질 잘 하는 법',
-    author: '이해용',
-    src: 'images/bread.png',
-  },
-  {
-    id: 4,
-    title: '라면 꼬들파 vs 퍼짐파',
-    author: '손가영',
-    src: 'images/bread.png',
-  },
-  {
-    id: 5,
-    title: '마법의 성을 지나 늪을 건너',
-    author: '임한구',
-    src: 'images/bread.png',
-  },
-  {
-    id: 6,
-    title: '바퀴벌레 퇴치 하는 방법',
-    author: '김완영',
-    src: 'images/bread.png',
-  },
-  {
-    id: 7,
-    title: '사기 당하지 않고 메이플 거래하는 법',
-    author: '예스해리',
-    src: 'images/bread.png',
-  },
-];

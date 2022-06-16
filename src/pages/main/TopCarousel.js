@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { GrLinkPrevious, GrLinkNext } from 'react-icons/gr';
 import styled from 'styled-components';
 import Slider from 'react-slick';
@@ -22,22 +22,32 @@ const TopCarousel = () => {
     ),
     customPaging: i => <CustomPaging>0{i + 1}</CustomPaging>,
   };
+
+  const [carousel, setCarousel] = useState([]);
+
+  useEffect(() => {
+    fetch(`http://10.58.2.42:8000/contents/postlist/all`)
+      .then(res => res.json())
+      .then(data => {
+        setCarousel(data.result);
+      });
+  }, []);
   return (
     <StyledSlider {...settings}>
-      {arrayShuffle(MAIN_SLIDER).map(slide => {
-        const { id, name, carousel, bgImg, desc } = slide;
+      {arrayShuffle(carousel).map(slide => {
+        const { id, name, carousel, bglomg, desc } = slide;
         return (
           <SliderWrapper key={id}>
             <div>
-              <FirstDiv bgImg={bgImg}>
+              <FirstDiv bgImg={bglomg}>
                 <CarouselSpan>{name}</CarouselSpan>
                 <CarouselDesc>by {desc}</CarouselDesc>
               </FirstDiv>
             </div>
             <SecondDiv>
-              {carousel.map(({ id, name, bgImg }) => {
+              {carousel.map(({ id, name, bglmg }) => {
                 return (
-                  <CarouselInnerDiv key={id} bgImg={bgImg}>
+                  <CarouselInnerDiv key={id} bgImg={bglmg}>
                     <CarouselSpan>{name}</CarouselSpan>
                     <CarouselDesc>by {desc}</CarouselDesc>
                     {/* <Carouseldesc>{desc}</Carouseldesc> */}
@@ -177,155 +187,155 @@ const SliderWrapper = styled.div`
   overflow: hidden;
 `;
 
-const MAIN_SLIDER = [
-  {
-    id: 1,
-    name: '파리의 시간을 사는 중이라 전해',
-    desc: '행갬',
-    bgImg: 'images/Carousel/carousel1.jpeg',
-    carousel: [
-      {
-        id: 1,
-        name: '마블은 죽었다',
-        bgImg: 'images/Carousel/carousel2.jpeg',
-        desc: '행갬',
-      },
-      {
-        id: 2,
-        name: '블루 스컬에 대한 고찰',
-        bgImg: 'images/Carousel/carousel3.jpeg',
-        desc: '행갬',
-      },
-    ],
-  },
-  {
-    id: 2,
-    name: '닥터 스트레인지는 법사인가 잡캐인가',
-    bgImg: 'images/Carousel/carousel4.jpeg',
-    desc: '행갬',
-    carousel: [
-      {
-        id: 1,
-        name: '타농부의 당근 농사법',
-        bgImg: 'images/Carousel/carousel5.jpeg',
-        desc: '행갬',
-      },
-      {
-        id: 2,
-        name: '아이엠 그루트',
-        bgImg: 'images/Carousel/carousel6.jpeg',
-        desc: '행갬',
-      },
-    ],
-  },
-  {
-    id: 3,
-    name: '아이엠 그루트',
-    bgImg: 'images/Carousel/carousel7.png',
-    desc: '행갬',
-    carousel: [
-      {
-        id: 1,
-        name: '연탄이 커여어',
-        bgImg: 'images/Carousel/carousel8.jpeg',
-        desc: '행갬',
-      },
-      {
-        id: 2,
-        name: '룰루레몬 한국 사이트에 대하여',
-        bgImg: 'images/Carousel/carousel9.jpg',
-        desc: '행갬',
-      },
-    ],
-  },
-  {
-    id: 4,
-    name: '푸틴은 왜 용인대 명예 박사를 받았는가',
-    bgImg: 'images/Carousel/carousel10.jpg',
-    desc: '행갬',
-    carousel: [
-      {
-        id: 1,
-        name: '집에 가고 싶다',
-        bgImg: 'images/Carousel/carousel11.jpg',
-        desc: '행갬',
-      },
-      {
-        id: 2,
-        name: '마블은 살았다',
-        bgImg: 'images/Carousel/carousel12.jpg',
-        desc: '행갬',
-      },
-    ],
-  },
-  {
-    id: 5,
-    name: 'article1',
-    carousel: [
-      {
-        id: 1,
-        name: 'article2',
-      },
-      {
-        id: 2,
-        name: 'article3',
-      },
-    ],
-  },
-  {
-    id: 6,
-    name: 'article1',
-    carousel: [
-      {
-        id: 1,
-        name: 'article2',
-      },
-      {
-        id: 2,
-        name: 'article3',
-      },
-    ],
-  },
-  {
-    id: 7,
-    name: 'article1',
-    carousel: [
-      {
-        id: 1,
-        name: 'article2',
-      },
-      {
-        id: 2,
-        name: 'article3',
-      },
-    ],
-  },
-  {
-    id: 8,
-    name: 'article1',
-    carousel: [
-      {
-        id: 1,
-        name: 'article2',
-      },
-      {
-        id: 2,
-        name: 'article3',
-      },
-    ],
-  },
-  {
-    id: 9,
-    name: 'article1',
-    carousel: [
-      {
-        id: 1,
-        name: 'article2',
-      },
-      {
-        id: 2,
-        name: 'article3',
-      },
-    ],
-  },
-];
+// const MAIN_SLIDER = [
+//   {
+//     id: 1,
+//     name: '파리의 시간을 사는 중이라 전해',
+//     desc: '행갬',
+//     bgImg: 'images/Carousel/carousel1.jpeg',
+//     carousel: [
+//       {
+//         id: 1,
+//         name: '마블은 죽었다',
+//         bgImg: 'images/Carousel/carousel2.jpeg',
+//         desc: '행갬',
+//       },
+//       {
+//         id: 2,
+//         name: '블루 스컬에 대한 고찰',
+//         bgImg: 'images/Carousel/carousel3.jpeg',
+//         desc: '행갬',
+//       },
+//     ],
+//   },
+//   {
+//     id: 2,
+//     name: '닥터 스트레인지는 법사인가 잡캐인가',
+//     bgImg: 'images/Carousel/carousel4.jpeg',
+//     desc: '행갬',
+//     carousel: [
+//       {
+//         id: 1,
+//         name: '타농부의 당근 농사법',
+//         bgImg: 'images/Carousel/carousel5.jpeg',
+//         desc: '행갬',
+//       },
+//       {
+//         id: 2,
+//         name: '아이엠 그루트',
+//         bgImg: 'images/Carousel/carousel6.jpeg',
+//         desc: '행갬',
+//       },
+//     ],
+//   },
+//   {
+//     id: 3,
+//     name: '아이엠 그루트',
+//     bgImg: 'images/Carousel/carousel7.png',
+//     desc: '행갬',
+//     carousel: [
+//       {
+//         id: 1,
+//         name: '연탄이 커여어',
+//         bgImg: 'images/Carousel/carousel8.jpeg',
+//         desc: '행갬',
+//       },
+//       {
+//         id: 2,
+//         name: '룰루레몬 한국 사이트에 대하여',
+//         bgImg: 'images/Carousel/carousel9.jpg',
+//         desc: '행갬',
+//       },
+//     ],
+//   },
+//   {
+//     id: 4,
+//     name: '푸틴은 왜 용인대 명예 박사를 받았는가',
+//     bgImg: 'images/Carousel/carousel10.jpg',
+//     desc: '행갬',
+//     carousel: [
+//       {
+//         id: 1,
+//         name: '집에 가고 싶다',
+//         bgImg: 'images/Carousel/carousel11.jpg',
+//         desc: '행갬',
+//       },
+//       {
+//         id: 2,
+//         name: '마블은 살았다',
+//         bgImg: 'images/Carousel/carousel12.jpg',
+//         desc: '행갬',
+//       },
+//     ],
+//   },
+//   {
+//     id: 5,
+//     name: 'article1',
+//     carousel: [
+//       {
+//         id: 1,
+//         name: 'article2',
+//       },
+//       {
+//         id: 2,
+//         name: 'article3',
+//       },
+//     ],
+//   },
+//   {
+//     id: 6,
+//     name: 'article1',
+//     carousel: [
+//       {
+//         id: 1,
+//         name: 'article2',
+//       },
+//       {
+//         id: 2,
+//         name: 'article3',
+//       },
+//     ],
+//   },
+//   {
+//     id: 7,
+//     name: 'article1',
+//     carousel: [
+//       {
+//         id: 1,
+//         name: 'article2',
+//       },
+//       {
+//         id: 2,
+//         name: 'article3',
+//       },
+//     ],
+//   },
+//   {
+//     id: 8,
+//     name: 'article1',
+//     carousel: [
+//       {
+//         id: 1,
+//         name: 'article2',
+//       },
+//       {
+//         id: 2,
+//         name: 'article3',
+//       },
+//     ],
+//   },
+//   {
+//     id: 9,
+//     name: 'article1',
+//     carousel: [
+//       {
+//         id: 1,
+//         name: 'article2',
+//       },
+//       {
+//         id: 2,
+//         name: 'article3',
+//       },
+//     ],
+//   },
+// ];

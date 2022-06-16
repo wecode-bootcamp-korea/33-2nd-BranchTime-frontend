@@ -18,7 +18,7 @@ const MyPage = () => {
   useEffect(() => {
     fetch(`${BASE_URL}users/mypage`, {
       headers: {
-        Authorization: localStorage.getItem('Authorization'),
+        Authorization: localStorage.getItem('token'),
       },
     })
       .then(res => res.json())

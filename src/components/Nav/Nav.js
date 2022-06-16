@@ -47,7 +47,7 @@ const Nav = () => {
   }, [currentURL]);
 
   const goToMain = () => {
-    navigate('/main');
+    navigate('/');
     setNavDrawer(false);
   };
 
@@ -81,6 +81,7 @@ const Nav = () => {
         startLogin={startLogin}
         quitLogin={quitLogin}
         loginModal={loginModal}
+        setNavDrawer={setNavDrawer}
       />
       <Navigator changeNavBar={navBar} currentURL={currentURL}>
         <NavWrapper>
@@ -96,11 +97,11 @@ const Nav = () => {
           </NavElement>
           <NavElement>
             <NavBtn>
-              {currentURL === '/main' && (
+              {currentURL === '/' && !isActive && (
                 <NavLogin onClick={startLogin}>시작하기</NavLogin>
               )}
               {currentURL === '/write' && <NavLogin>저장</NavLogin>}
-              {currentURL === '/main' && (
+              {currentURL === '/' && (
                 <CgSearch onClick={openSearch} size={25} />
               )}
               {currentURL === '/post_list' && <CgSearch size={25} />}
@@ -109,7 +110,7 @@ const Nav = () => {
           </NavElement>
         </NavWrapper>
       </Navigator>
-      {search && <Search />}
+      {search && <Search openSearch={openSearch} />}
       {loginModal && <Login quitLogin={quitLogin} />}
     </>
   );

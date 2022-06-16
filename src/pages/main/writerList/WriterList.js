@@ -7,14 +7,14 @@ const WriterList = ({ list }) => {
       {list &&
         list.map(list => {
           const {
-            id,
+            author_id,
             author_thumbnail,
             author_name,
             author_introduction,
             author_subcategory,
           } = list;
           return (
-            <li key={id}>
+            <li key={author_id}>
               <a href="#!">
                 <WriterProfile src={author_thumbnail} alt="writer" />
                 <WritersName>{author_name}</WritersName>
