@@ -111,9 +111,6 @@ const Navigator = styled.div`
   position: sticky;
   top: 0;
   width: 100vw;
-  z-index: 800;
-  background-color: white;
-
   ${props =>
     props.changeNavBar &&
     css`
@@ -163,7 +160,6 @@ const NavBtn = styled.button`
   border: 0;
   cursor: pointer;
   margin: 0.2rem;
-
   img {
     width: 5.2rem;
     margin-left: 0.2rem;
