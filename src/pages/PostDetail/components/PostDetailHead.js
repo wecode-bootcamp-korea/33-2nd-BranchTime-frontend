@@ -1,27 +1,39 @@
 import React from 'react';
 import styled from 'styled-components';
-import Nav from '../../../components/Nav/Nav';
-import PostDetailNav from './PostDetailNav';
 
 const PostDetailHead = ({ data }) => {
   return (
-    <Cover>
-      <CoverImg>
-        <Titlewarp>
-          <CoverTitleWarp>
-            <CoverTitle>UX 디자인 프로세스에서 러프스케치의 역할은?</CoverTitle>
-            <CoverSubTitle>전민수 UX TV 시리즈</CoverSubTitle>
-            <CoverDesc>
-              <span>by UX 컨설턴트 전민수</span>
-              <IcoDot />
-              <span>1시간전</span>
-            </CoverDesc>
-          </CoverTitleWarp>
-
-          <CoverInner />
-        </Titlewarp>
-      </CoverImg>
-    </Cover>
+    <PostDetailHeadWarpper>
+      {data.map(
+        ({
+          post_id,
+          post_title,
+          post_subtitle,
+          post_user_name,
+          post_created_at,
+          post_thumbnail_image,
+        }) => (
+          <Cover key={post_id}>
+            <CoverImg image={post_thumbnail_image}>
+              <Titlewarp>
+                <CoverTitleWarp>
+                  <CoverPositionWrap>
+                    <CoverTitle>{post_title}</CoverTitle>
+                    <CoverSubTitle>{post_subtitle}</CoverSubTitle>
+                    <CoverDesc>
+                      <span>by {post_user_name}</span>
+                      <IcoDot />
+                      <span>{post_created_at}</span>
+                    </CoverDesc>
+                  </CoverPositionWrap>
+                </CoverTitleWarp>
+              </Titlewarp>
+              <CoverInner />
+            </CoverImg>
+          </Cover>
+        )
+      )}
+    </PostDetailHeadWarpper>
   );
 };
 

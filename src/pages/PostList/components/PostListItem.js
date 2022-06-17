@@ -1,76 +1,55 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import InfiniteScroll from 'react-infinite-scroll-component';
+import { BASE_URL } from '../../../config';
 
 const PostListItem = () => {
-  const [writeList, setWriteList] = useState([]);
-
+  const [postList, setPostList] = useState({});
   const navigate = useNavigate();
+  const params = useParams();
 
   useEffect(() => {
-    fetch('/data/WRITE_LIST.json')
-      .then(response => response.json())
-      .then(data => setWriteList(data));
-  }, []);
-
-  const fetchData = () => {
-    fetch('/data/WRITE_LIST.json')
+    fetch(`${BASE_URL}contents/postlist/${params.id}`)
       .then(res => res.json())
-      .then(data => setWriteList([...writeList, ...data]));
-  };
+      .then(data => {
+        setPostList(data.post_list);
+      });
+  }, [params.id]);
 
-  const onClickMove = () => {
-    navigate('/post_detail');
+  const onClickMove = id => {
+    navigate(`/post_detail/${id}`);
   };
 
   return (
-    <InfiniteScroll
-      dataLength={writeList.length}
-      next={fetchData}
-      hasMore={true}
-    >
-      {writeList.map(
-        (
-          {
-            id,
-            title,
-            subTitle,
-            desc,
-            commentCount,
-            writeTime,
-            wirteUser,
-            imgSrc,
-          },
-          i
-        ) => (
-          <Li key={i} onClick={onClickMove}>
+    <div>
+      {postList.post_list &&
+        postList.post_list.map(([post]) => (
+          <Li key={post.post_id} onClick={() => onClickMove(post.post_id)}>
             <ImgItemWrap>
               <ItemDesc>
-                <Title>{title}</Title>
+                <Title>{post.post_title}</Title>
                 <DescWarp>
-                  <em>{subTitle}</em>
+                  <em>{post.post_subTitle}</em>
                   <IconBar />
-                  <span>{desc}</span>
+                  <span>{post.desc}</span>
                 </DescWarp>
                 <SubDesc>
-                  <span>댓글 {commentCount}</span>
+                  <span>댓글 {post.commentCount}</span>
                   <IcoDot />
-                  <span>{writeTime}시간 전</span>
+                  <span>작성 시간 {post.writeTime}</span>
                   <IcoDot />
-                  <span>by {wirteUser}</span>
+                  <span>by {post.writeUser}</span>
                 </SubDesc>
               </ItemDesc>
-              {imgSrc ? (
+              {post.imgSrc ? (
                 <ItemImgBox>
-                  <img src={imgSrc} alt="임시사진" />
+                  <img src={post.imgSrc} alt="임시사진" />
                 </ItemImgBox>
               ) : null}
             </ImgItemWrap>
           </Li>
-        )
-      )}
-    </InfiniteScroll>
+        ))}
+    </div>
   );
 };
 

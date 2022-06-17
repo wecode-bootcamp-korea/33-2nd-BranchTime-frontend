@@ -1,16 +1,26 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
+import { BASE_URL } from '../../../config';
 
 const SuggestionCont = () => {
-  const [Suggestion, setSuggestion] = useState([]);
+  const [suggestion, setSuggestion] = useState([]);
+  const [suggestionTip, setSuggestionTip] = useState([]);
   const [isVaildOpen, setIsVaildOpen] = useState(false);
+  const params = useParams();
 
   useEffect(() => {
     fetch('/data/SUGGESTION_TIP.json')
       .then(res => res.json())
-      .then(data => setSuggestion(data));
+      .then(data => setSuggestionTip(data));
   }, []);
+
+  useEffect(() => {
+    fetch(`${BASE_URL}contents/${params.id}`)
+      .then(res => res.json())
+      .then(data => setSuggestion(data.message));
+  }, [params.id]);
 
   const handleOpen = () => {
     setIsVaildOpen(!isVaildOpen);
@@ -18,29 +28,40 @@ const SuggestionCont = () => {
 
   return (
     <ProposeCont>
-      <InfoDetail>
-        <Textbox>
-          <Title>
-            전기환
-            <br /> 작가에게 제안하기
-          </Title>
-          <P>인터랙티브 개발자</P>
-          <InfoWriter>
-            <Span>디자인</Span>
-            <IcoDot />
-            <Span>저널리즘</Span>
-            <IcoDot />
-            <Span>IT</Span>
-          </InfoWriter>
-        </Textbox>
+      {suggestion.map(
+        ({
+          post_id,
+          user_name,
+          post_subtitle,
+          user_introduction,
+          user_thumbnail,
+          post_subcategory_name,
+        }) => (
+          <InfoDetail key={post_id}>
+            <Textbox>
+              <Title>
+                {user_name}
+                <br /> 작가에게 제안하기
+              </Title>
+              <P>{user_introduction}</P>
+              <InfoWriter>
+                <Span>{post_subcategory_name}</Span>
+                <IcoDot />
+                <Span>{post_subtitle}</Span>
+                <IcoDot />
+                <Span>IT</Span>
+              </InfoWriter>
+            </Textbox>
 
-        <ImgBox>
-          <ImgWrap>
-            <img src="/images/bread.png" alt="임시사진" />
-          </ImgWrap>
-          <ImgBg />
-        </ImgBox>
-      </InfoDetail>
+            <ImgBox>
+              <ImgWrap>
+                <img src={user_thumbnail} alt="임시사진" />
+              </ImgWrap>
+              <ImgBg />
+            </ImgBox>
+          </InfoDetail>
+        )
+      )}
 
       <Dl isVaildOpen={isVaildOpen}>
         <Dt>제안 팁</Dt>
@@ -60,7 +81,7 @@ const SuggestionCont = () => {
 
           {isVaildOpen && (
             <Ul>
-              {Suggestion.map(({ id, title, desc }) => (
+              {suggestionTip.map(({ id, title, desc }) => (
                 <DlLi key={id}>
                   <DlLiNum>{id}</DlLiNum>
                   <DlLiStrong>{title}</DlLiStrong>

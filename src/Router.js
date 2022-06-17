@@ -34,7 +34,7 @@ function Router() {
         <Route path="/myPageProfileEdit" element={<MyPageProfileEdit />} />
         <Route path="/bookAnimation" element={<BookAnimation />} />
         <Route path="/write" element={<Write />} />
-        <Route path="/suggestion" element={<Suggestion />} />
+        <Route path="/suggestion:/id" element={<Suggestion />} />
       </Routes>
     </BrowserRouter>
   );
