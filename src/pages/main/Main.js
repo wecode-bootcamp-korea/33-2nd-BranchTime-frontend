@@ -6,7 +6,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import { GiTreeBranch } from 'react-icons/gi';
 import TopCarousel from './TopCarousel';
 import RecommendCarousel from './RecommendCarousel';
-
+import { BASE_URL } from '../../config';
 import WriterList from './writerList/WriterList';
 import { useSearchParams } from 'react-router-dom';
 import Keyword from './keyword/Keyword';
@@ -18,7 +18,7 @@ const Main = () => {
   const category = searchParams.get('subcategory_id');
 
   useEffect(() => {
-    fetch(`http://10.58.2.42:8000/authors/?subcategory_id=${category}`)
+    fetch(`${BASE_URL}authors/?subcategory_id=${category}`)
       .then(res => res.json())
       .then(data => {
         setWriterList(data.message);

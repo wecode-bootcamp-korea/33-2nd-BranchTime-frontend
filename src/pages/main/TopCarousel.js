@@ -3,6 +3,7 @@ import { GrLinkPrevious, GrLinkNext } from 'react-icons/gr';
 import styled from 'styled-components';
 import Slider from 'react-slick';
 import arrayShuffle from 'array-shuffle';
+import { BASE_URL } from '../../config';
 
 const TopCarousel = () => {
   const settings = {
@@ -26,7 +27,7 @@ const TopCarousel = () => {
   const [carousel, setCarousel] = useState([]);
 
   useEffect(() => {
-    fetch(`http://10.58.2.42:8000/contents/postlist/all`)
+    fetch(`${BASE_URL}contents/postlist/all`)
       .then(res => res.json())
       .then(data => {
         setCarousel(data.result);
