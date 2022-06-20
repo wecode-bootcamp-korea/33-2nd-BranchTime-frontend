@@ -26,14 +26,15 @@
 - scroll event에 따른 UI 변경
 - 엔드 포인트에 따른 컴포넌트 변경
 - useNavigate를 통한 페이지 이동
-- localStorage를 통한 로그인 상태에 따른 UI 변경 구현
+- localStorage를 통한 로그인 상태에 따른 UI 변경
 <br/>
 
 ### write 페이지
 - markdown editor Library 설정
-- Form Data를 이용한 write Header 배경 이미지 삽입 및 삭제 구현
-- write Header color infinite 변경을 통한 꾸미기 구현
-- Title align 변경 구현
+- DB를 활용한 Main Category & Sub Category 설정
+- Form Data를 이용한 write Header 배경 이미지 삽입 및 삭제
+- write Header color infinite 변경을 통한 꾸미기
+- Title align 변경
 <br/>
 
 # Coding Convention
