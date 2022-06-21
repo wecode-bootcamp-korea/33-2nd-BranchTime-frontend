@@ -79,3 +79,27 @@ trello
 - Title align 변경
 <br/>
 
+### Main
+```
+- React-slick을 통한 메인 페이지 Carousel 구현 및 리렌더링시마다 랜덤 데이터로 재배열
+- useSearchParams를 사용하여 추천 작가리스트 버튼 클릭시마다 query parameter 변경하여 다른 데이터 fetch
+```
+
+### Footer
+
+<img width="1717" alt="image" src="https://user-images.githubusercontent.com/78855917/174509607-6b83a237-cc7a-44b3-8f13-cc6bc5221475.png">
+
+### Search
+
+```
+-  백엔드에서 글과 작가 전체 데이터를 fetch해온 뒤, 검색 value 값을 include하는 데이터들만 filter 메소드를 통해 재반환
+-  path parameter를 활용하여 글 제목 클릭 시 해당 글의 상세 페이지로, 작가 이름 클릭 시 해당 작가의 상세 페이지로 이동하도록 구현
+```
+
+
+### 회원가입 / 
+```
+- OAuth를 통한 Kakao API 소셜 로그인 구현
+- .env 파일을 통해 client_id와 redirect_uri 보안 처리
+```
+---
